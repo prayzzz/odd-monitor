@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Betting Monitor</title>
+    <link href="dist/bundle.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+    <header class="flex-row">
+        <div class="time flex-row v-centered">
+            <span data-bind="text: time"></span>
+        </div>
+        <div class="flex-row strechted right spaced">
+            <div>
+                <a href="http://www.vpgame.com/" target="_blank"><img src="/img/sites/vpgame_64.png" width="24" height="24" />VPGame.com</a>
+            </div>
+            <div>
+                <a href="http://www.hltv.org/" target="_blank"><img src="/img/sites/hltv_64.png" width="24" height="24" />HLTV.org</a>
+            </div>
+            <div>
+                <a href="https://www.reddit.com/r/csgobetting/new/" target="_blank"><img src="/img/sites/reddit_64.png" width="24" height="24" />/r/csgobetting</a>
+            </div>
+            <div>
+                <a href="http://www.gosugamers.net/dota2/gosubet" target="_blank"><img src="/img/sites/gosugamers_64.png" width="24" height="24" />GosuGamers.com</a>
+            </div>
+            <div>
+                <a href="https://www.reddit.com/r/dota2betting/new/" target="_blank"><img src="/img/sites/reddit_64.png" width="24" height="24" />/r/dota2betting</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="filter">
+
+        Filter:
+
+        <!-- ko foreach: {data: Object.keys(filter), as: '_propkey'} -->
+
+        <input type="checkbox" data-bind="checked: $parent.filter[_propkey], click: $parent.filterChanged($parent)"> <span
+            data-bind="text: _propkey"></span>
+
+        <!-- /ko -->
+
+    </section>
+
+    <!-- ko foreach: filteredMatches -->
+
+    <div class="match">
+        <div class="head flex-row v-centered">
+            <div class="flex-row spaced">
+                <img data-bind="attr: { src: $root.getImagePath(category) }" width="24" height="24" />
+                <div><span data-bind="text: formattedDate"></span></div>
+                <img data-bind="attr: { src: team1.logoUrl }" height="24" />
+                <div><span data-bind="text: team1.name"></span> vs. <span data-bind="text: team2.name"></span></div>
+                <img data-bind="attr: { src: team2.logoUrl }" height="24" />
+            </div>
+            <div class="category flex-row right spaced">
+                <div><span data-bind="text: tournament.name"></span></div>
+            </div>
+        </div>
+        <div class="body">
+
+        </div>
+    </div>
+
+    <!-- /ko -->
+
+    <script src="dist/bundle.js" type="text/javascript"></script>
+</body>
+
+</html>

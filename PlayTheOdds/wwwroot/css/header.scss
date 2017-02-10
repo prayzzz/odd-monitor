@@ -1,0 +1,23 @@
+@import "var/colors.scss";
+
+header {
+   background-color: lighten($color-background, 10%);
+   margin-bottom: 1em;
+   padding: 0 1em;
+
+   a {
+      display: flex;
+      height: 2em;
+      padding: .5em;
+      align-items: center;
+
+      &:hover {
+         background-color: lighten($color-background, 20%);
+         color: #fff;
+      }
+
+      img {
+         margin-right: 5px;
+      }
+   }
+}
