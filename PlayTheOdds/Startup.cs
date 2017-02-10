@@ -43,10 +43,6 @@ namespace PlayTheOdds
             app.UseStaticFiles();
 
             app.UseMvc();
-
-            // load api controllers
-            var applicationPartManager = app.ApplicationServices.GetRequiredService<ApplicationPartManager>();
-            applicationPartManager.ApplicationParts.Add(new AssemblyPart(Assembly.Load(new AssemblyName("PlayTheOdds.Api"))));
         }
     }
 }

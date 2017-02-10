@@ -15,7 +15,7 @@ namespace PlayTheOdds.Heartbeat
         [HttpGet]
         public void Heartbeat()
         {
-            _heartbeat.ResetLastActivity();
+            _heartbeat.ResetHeartbeat();
         }
     }
 }

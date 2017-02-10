@@ -2,6 +2,9 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Remove="wwwroot\**" />
     <Content Remove="wwwroot\node_modules\**" />
@@ -11,12 +14,8 @@
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.1" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.0.0" />
-    <PackageReference Include="prayzzz.Common" Version="1.0.0-ci-22" />
-    <PackageReference Include="prayzzz.Common.Mvc" Version="1.0.0-ci-22" />
+    <PackageReference Include="prayzzz.Common" Version="1.0.0-ci-24" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0-rc1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="1.0.0-rc1" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PlayTheOdds.Api\PlayTheOdds.Api.csproj" />
   </ItemGroup>
 </Project>
