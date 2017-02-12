@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using prayzzz.Common.Attributes;
 
-namespace PlayTheOdds.VPGame
+namespace PlayTheOdds.VPGame.Matches
 {
     public interface IMatchService
     {
-        Task<List<JObject>> GetOpenMatchesAsync();
+        Task<List<Match>> GetOpenMatchesAsync();
 
-        Task<List<JObject>> GetLiveMatchesAsync();
+        Task<List<Match>> GetLiveMatchesAsync();
     }
 
     [Inject]
@@ -26,7 +26,7 @@ namespace PlayTheOdds.VPGame
         private const string StatusOpen = "open";
         private const string StatusLive = "start";
 
-        private readonly ILogger<MatchService> _logger;
+        private readonly ILogger _logger;
         private readonly JsonSerializer _jsonSerializer;
 
         public MatchService(ILoggerFactory loggerFactory)
@@ -35,17 +35,17 @@ namespace PlayTheOdds.VPGame
             _jsonSerializer = JsonSerializer.Create();
         }
 
-        public async Task<List<JObject>> GetOpenMatchesAsync()
+        public async Task<List<Match>> GetOpenMatchesAsync()
         {
             return await GetMatches(StatusOpen);
         }
 
-        public async Task<List<JObject>> GetLiveMatchesAsync()
+        public async Task<List<Match>> GetLiveMatchesAsync()
         {
             return await GetMatches(StatusLive);
         }
 
-        private async Task<List<JObject>> GetMatches(string status)
+        private async Task<List<Match>> GetMatches(string status)
         {
             var uriBuilder = new UriBuilder
             {
@@ -61,13 +61,14 @@ namespace PlayTheOdds.VPGame
                 var response = await webRequest.GetResponseAsync();
                 using (var stream = new JsonTextReader(new StreamReader(response.GetResponseStream())))
                 {
-                    return _jsonSerializer.Deserialize<VpGameEnvelope<VpGameMatch>>(stream).Body;
+                    var body = _jsonSerializer.Deserialize<Envelope<Match>>(stream).Body;
+                    return body.Select(b => new Match { Body = b }).ToList();
                 }
             }
             catch (Exception e)
             {
-                _logger.LogError(null, e, string.Empty);
-                return new List<JObject>();
+                _logger.LogError(-1, e, string.Empty);
+                return new List<Match>();
             }
         }
     }

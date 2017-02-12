@@ -36,8 +36,7 @@
 
         <!-- ko foreach: {data: Object.keys(filter), as: '_propkey'} -->
 
-        <input type="checkbox" data-bind="checked: $parent.filter[_propkey], click: $parent.filterChanged($parent)"> <span
-            data-bind="text: _propkey"></span>
+        <input type="checkbox" data-bind="checked: $parent.filter[_propkey], click: $parent.filterChanged($parent)"> <span data-bind="text: _propkey"></span>
 
         <!-- /ko -->
 
@@ -46,10 +45,10 @@
     <!-- ko foreach: filteredMatches -->
 
     <div class="match">
-        <div class="head flex-row v-centered">
+        <a class="head flex-row v-centered" href="#" data-bind="attr: {href: matchLink }" target="_blank">
             <div class="flex-row spaced">
                 <img data-bind="attr: { src: $root.getImagePath(category) }" width="24" height="24" />
-                <div><span data-bind="text: formattedDate"></span></div>
+                <div style="width: 4em; text-align: center; font-size: 1.1em"><span data-bind="text: formattedDate"></span></div>
                 <img data-bind="attr: { src: team1.logoUrl }" height="24" />
                 <div><span data-bind="text: team1.name"></span> vs. <span data-bind="text: team2.name"></span></div>
                 <img data-bind="attr: { src: team2.logoUrl }" height="24" />
@@ -57,7 +56,7 @@
             <div class="category flex-row right spaced">
                 <div><span data-bind="text: tournament.name"></span></div>
             </div>
-        </div>
+        </a>
         <div class="body">
 
         </div>

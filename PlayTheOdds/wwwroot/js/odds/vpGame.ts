@@ -14,39 +14,41 @@ export class VpGame {
 
         return new Promise<Match[]>((resolve, reject) => {
 
-            Ajax.get<VpGameEnvelop<VpGameMatch[]>>(url)
+            Ajax.get<VpGameMatch[]>(url)
                 .success(data => {
-                    const matches = data.body.map(vpMatch => this.map(vpMatch));
+                    if (data === null) {
+                        return;
+                    }
+
+                    const matches = data.map(m => this.map(m));
                     resolve(matches);
                 })
                 .send();
-        })
+        });
     }
 
-    private map(vpMatch: VpGameMatch): Match {
-        const tournament = new Tournament(vpMatch.tournament.name);
+    private map(m: VpGameMatch): Match {
+        const tournament = new Tournament(m.tournament.name);
 
-        const team1 = new Team(vpMatch.team.left.id, vpMatch.team.left.name);
-        team1.logoUrl = new LogoUrl().build(vpMatch.team.left.logo);
+        const team1 = new Team(m.team.left.id, m.team.left.name);
+        team1.logoUrl = new LogoUrl().build(m.team.left.logo);
 
-        const team2 = new Team(vpMatch.team.right.id, vpMatch.team.right.name);
-        team2.logoUrl = new LogoUrl().build(vpMatch.team.right.logo);
+        const team2 = new Team(m.team.right.id, m.team.right.name);
+        team2.logoUrl = new LogoUrl().build(m.team.right.logo);
 
-        const category = VpGameCategory.getCategory(vpMatch.category);
+        const category = VpGameCategory.getCategory(m.category);
 
-        return new Match(vpMatch.id, new Date(1000 * Number(vpMatch.game_time)), team1, team2, category, tournament);
+        const match = new Match(m.id, new Date(1000 * Number(m.game_time)), team1, team2, category, tournament);
+        match.matchLinkBuilder = this.buildMatchLink;
+
+        return match;
+    }
+
+    private buildMatchLink(m: Match): string {
+        return `http://dota2.vpgame.com/match/${m.id}.html`;
     }
 }
 
-
-
-interface VpGameEnvelop<T> {
-    body: T;
-    current_time: number;
-    message: string;
-    status: number;
-    success: boolean;
-}
 
 interface VpGameMatch {
     category: string;

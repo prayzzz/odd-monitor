@@ -42,6 +42,11 @@ namespace PlayTheOdds.Common.Extensions
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+
+                if (attribute.AutoActivate)
+                {
+                    registrationBuilder.AutoActivate();
+                }
             }
         }
     }

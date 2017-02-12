@@ -1,6 +1,5 @@
 ﻿import { Category } from "../enums/category"
 import { Status } from "../enums/status"
-import Str from "../prototype/string";
 
 export class VpGameMatchUrlBuilder {
     private readonly baseUrl = "/api/v1/vpgame/match";
@@ -36,10 +35,10 @@ export class VpGameMatchUrlBuilder {
 
     public build(): string {
         return this.baseUrl + "?" +
-            Str.replace(this.pagePattern, this.page) + "&" +
-            Str.replace(this.categoryPattern, this.category) + "&" +
-            Str.replace(this.statusPattern, this.status) + "&" +
-            Str.replace(this.limitPattern, this.limit);
+            this.pagePattern.replace("{0}", `${this.page}`) + "&" +
+            this.categoryPattern.replace("{0}", this.category) + "&" +
+            this.statusPattern.replace("{0}", this.status) + "&" +
+            this.limitPattern.replace("{0}", `${this.limit}`);
     }
 }
 

@@ -1,7 +1,7 @@
 interface IAjaxRequest<T> {
-    success(cb: (data: T) => void): IAjaxRequest<T>;
-    error(cb: (data: T) => void): IAjaxRequest<T>;
-    always(cb: (data: T) => void): IAjaxRequest<T>;
+    success(cb: (data: T | null) => void): IAjaxRequest<T>;
+    error(cb: (data: T | null) => void): IAjaxRequest<T>;
+    always(cb: (data: T | null) => void): IAjaxRequest<T>;
     send(): void;
 }
 
@@ -15,30 +15,30 @@ class AjaxRequest<T> implements IAjaxRequest<T> {
     private method: string;
     private url: string;
 
-    private successCb: (data: T) => void;
-    private errorCb: (data: T) => void;
-    private alwaysCb: (data: T) => void;
+    private successCb: (data: T | null) => void;
+    private errorCb: (data: T | null) => void;
+    private alwaysCb: (data: T | null) => void;
 
     constructor(method: string, url: string) {
         this.method = method;
         this.url = url;
 
-        this.successCb = d => { };
-        this.errorCb = d => { };
-        this.alwaysCb = d => { };
+        this.successCb = (): void => { };
+        this.errorCb = (): void => { };
+        this.alwaysCb = (): void => { };
     }
 
-    public success(cb: (data: T) => void): IAjaxRequest<T> {
+    public success(cb: (data: T | null) => void): IAjaxRequest<T> {
         this.successCb = cb;
         return this;
     }
 
-    public error(cb: (data: T) => void): IAjaxRequest<T> {
+    public error(cb: (data: T | null) => void): IAjaxRequest<T> {
         this.errorCb = cb;
         return this;
     }
 
-    public always(cb: (data: T) => void): IAjaxRequest<T> {
+    public always(cb: (data: T | null) => void): IAjaxRequest<T> {
         this.alwaysCb = cb;
         return this;
     }
@@ -47,32 +47,36 @@ class AjaxRequest<T> implements IAjaxRequest<T> {
         const request = new XMLHttpRequest();
         request.open(this.method, this.url, true);
         request.setRequestHeader("Content-Type", "application/json");
-        request.onreadystatechange = (event: Event) => {
+        request.onreadystatechange = () => {
             if (4 !== request.readyState) {
                 return;
             }
 
-            this.alwaysCb(this.parse(request))
+            this.alwaysCb(this.parse(request));
         }
 
-        request.onerror = (e: ErrorEvent) => {
-            this.errorCb(this.parse(request))
+        request.onerror = () => {
+            this.errorCb(this.parse(request));
         }
 
-        request.onloadend = (e: ProgressEvent) => {
+        request.onloadend = () => {
             if (request.status >= 200 && request.status < 300) {
-                this.successCb(this.parse(request))
+                this.successCb(this.parse(request));
             }
             else {
-                this.errorCb(this.parse(request))
+                this.errorCb(this.parse(request));
             }
         }
 
-        request.send()
+        request.send();
     }
 
-    private parse(request: XMLHttpRequest): T {
-        var result: T;
+    private parse(request: XMLHttpRequest): T | null {
+        if (!request.responseText && request.responseText === "") {
+            return null;
+        }
+
+        let result: T;
         try {
             result = JSON.parse(request.responseText);
         } catch (e) {

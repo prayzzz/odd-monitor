@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace PlayTheOdds.VPGame
 {
-    public class VpGameEnvelope<TBody>
+    public class Envelope<TBody>
     {
         [JsonProperty("success")]
         public bool Success { get; set; }
@@ -22,8 +22,15 @@ namespace PlayTheOdds.VPGame
         public int CurrentTime { get; set; }
     }
 
-    public class VpGameMatch
+    public class Match
     {
+        public JObject Body { get; set; }
 
+        public int ScheduleId => Body.Value<int>("tournament_schedule_id");
+    }
+
+    public class Odd
+    {
+        public JObject Body { get; set; }
     }
 }

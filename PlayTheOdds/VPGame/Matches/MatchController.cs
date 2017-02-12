@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
-namespace PlayTheOdds.VPGame
+namespace PlayTheOdds.VPGame.Matches
 {
     [Route("api/v1/vpgame/match")]
     public class MatchController : Controller
@@ -17,8 +18,7 @@ namespace PlayTheOdds.VPGame
         [HttpGet]
         public IEnumerable<JObject> GetMatches()
         {
-            var data = _matchLoader.GetMatches();
-            return data;
+            return _matchLoader.GetMatches().Select(m => m.Body);
         }
     }
 }
