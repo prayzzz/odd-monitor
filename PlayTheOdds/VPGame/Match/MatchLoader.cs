@@ -7,7 +7,7 @@ using prayzzz.Common.Attributes;
 using prayzzz.Common.Enums;
 using PlayTheOdds.Heartbeat;
 
-namespace PlayTheOdds.VPGame.Matches
+namespace PlayTheOdds.VPGame.Match
 {
     public interface IMatchLoader
     {
@@ -18,17 +18,18 @@ namespace PlayTheOdds.VPGame.Matches
     public class MatchLoader : IMatchLoader
     {
         private readonly IHeartbeat _heartbeat;
-        private readonly IMatchService _matchService;
-        private readonly IMessageHub _messageHub;
-        private readonly ILogger<MatchLoader> _logger;
 
         private readonly Timer _loadingTimer;
+        private readonly ILogger<MatchLoader> _logger;
 
         private readonly object _matchDataLock;
-        private DateTime _matchUpdateTime;
+        private readonly IMatchService _matchService;
+        private readonly IMessageHub _messageHub;
         private List<Match> _matchData;
+        private DateTime _matchUpdateTime;
 
-        public MatchLoader(IHeartbeat heartbeat, IMatchService matchService, IMessageHub messageHub, ILoggerFactory loggerFactory)
+        public MatchLoader(IHeartbeat heartbeat, IMatchService matchService, IMessageHub messageHub,
+            ILoggerFactory loggerFactory)
         {
             _heartbeat = heartbeat;
             _matchService = matchService;
@@ -38,7 +39,7 @@ namespace PlayTheOdds.VPGame.Matches
             _matchDataLock = new object();
             _matchData = new List<Match>();
 
-            _loadingTimer = new Timer(LoadMatches, null, TimeSpan.Zero, TimeSpan.FromSeconds(60));
+            _loadingTimer = new Timer(LoadMatches, null, TimeSpan.Zero, TimeSpan.FromMinutes(2));
         }
 
         public List<Match> GetMatches()
@@ -58,13 +59,15 @@ namespace PlayTheOdds.VPGame.Matches
                 return;
             }
 
+            var startTime = DateTime.Now;
+
             var openMatches = await _matchService.GetOpenMatchesAsync();
             var liveMatches = await _matchService.GetLiveMatchesAsync();
 
             var matches = liveMatches;
             matches.AddRange(openMatches);
 
-            _logger.LogInformation($"{matches.Count} matches loaded");
+            _logger.LogInformation($"{matches.Count} matches loaded in {(DateTime.Now - startTime).Milliseconds}ms");
 
             if (matches.Count != 0)
             {

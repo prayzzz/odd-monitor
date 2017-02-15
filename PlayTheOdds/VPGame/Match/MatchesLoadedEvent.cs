@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace PlayTheOdds.VPGame.Matches
+namespace PlayTheOdds.VPGame.Match
 {
     public class MatchesLoadedEvent
     {

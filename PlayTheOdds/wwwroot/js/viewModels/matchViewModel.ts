@@ -1,22 +1,34 @@
 ﻿import * as ko from "knockout";
 
+import { VpGame } from "../odds/vpGame"
 import Match from "../models/match"
 import Timespan from "../shared/timespan"
 import Tournament from "../models/tournament";
 import Team from "../models/team";
+import Wager from "../models/wager";
 import { Category } from "../enums/category";
 
 export default class MatchViewModel {
+    private readonly vpGame = new VpGame();
     private countdownHandle: number;
 
-    public readonly match: Match;
     public readonly formattedDate: KnockoutObservable<string>;
+    public readonly match: Match;
+    public readonly wagers: KnockoutObservableArray<Wager>;
 
     constructor(match: Match) {
         this.match = match;
         this.formattedDate = ko.observable<string>();
+        this.wagers = ko.observableArray<Wager>();
 
         this.initFormattedDate();
+
+        this.vpGame.getWagersAsync(this.match.scheduleId)
+            .then(wagers => {
+                this.wagers.removeAll();
+
+                wagers.forEach(w => this.wagers.push(w));
+            })
     }
 
     public get tournament(): Tournament {

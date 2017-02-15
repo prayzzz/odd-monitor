@@ -8,37 +8,50 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using prayzzz.Common.Attributes;
 
-namespace PlayTheOdds.VPGame.Odds
+namespace PlayTheOdds.VPGame.Match
 {
-    public interface IOddService
+    public interface IMatchService
     {
-        Task<List<Odd>> GetOdds(int matchId);
+        Task<List<Match>> GetLiveMatchesAsync();
+        Task<List<Match>> GetOpenMatchesAsync();
     }
 
     [Inject]
-    public class OddService : IOddService
+    public class MatchService : IMatchService
     {
         private const string Scheme = "http";
         private const string Host = "www.vpgame.com";
-        private const string Path = "gateway/v1/match/schedule";
-
-        private readonly ILogger _logger;
+        private const string Path = "gateway/v1/match";
+        private const string StatusOpen = "open";
+        private const string StatusLive = "start";
         private readonly JsonSerializer _jsonSerializer;
 
-        public OddService(ILoggerFactory loggerFactory)
+        private readonly ILogger _logger;
+
+        public MatchService(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger<OddService>();
+            _logger = loggerFactory.CreateLogger<MatchService>();
             _jsonSerializer = JsonSerializer.Create();
         }
 
-        public async Task<List<Odd>> GetOdds(int scheduleId)
+        public async Task<List<Match>> GetLiveMatchesAsync()
+        {
+            return await GetMatches(StatusLive);
+        }
+
+        public async Task<List<Match>> GetOpenMatchesAsync()
+        {
+            return await GetMatches(StatusOpen);
+        }
+
+        private async Task<List<Match>> GetMatches(string status)
         {
             var uriBuilder = new UriBuilder
             {
                 Scheme = Scheme,
                 Host = Host,
                 Path = Path,
-                Query = $"tid={scheduleId}&lang=en_US"
+                Query = $"category=&status={status}&limit=100&page=1"
             };
 
             try
@@ -48,13 +61,13 @@ namespace PlayTheOdds.VPGame.Odds
                 using (var stream = new JsonTextReader(new StreamReader(response.GetResponseStream())))
                 {
                     var body = _jsonSerializer.Deserialize<Envelope<Match>>(stream).Body;
-                    return body.Select(b => new Odd { Body = b }).ToList();
+                    return body.Select(b => new Match {Body = b}).ToList();
                 }
             }
             catch (Exception e)
             {
                 _logger.LogError(-1, e, string.Empty);
-                return new List<Odd>();
+                return new List<Match>();
             }
         }
     }

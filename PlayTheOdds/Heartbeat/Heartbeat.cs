@@ -35,11 +35,11 @@ namespace PlayTheOdds.Heartbeat
         /// </summary>
         public DateTime LastHeartbeat { get; private set; }
 
-        public TimeSpan TimeSinceLastActivity => DateTime.Now - LastHeartbeat;
-
         public void ResetHeartbeat()
         {
             LastHeartbeat = DateTime.Now;
         }
+
+        public TimeSpan TimeSinceLastActivity => DateTime.Now - LastHeartbeat;
     }
 }

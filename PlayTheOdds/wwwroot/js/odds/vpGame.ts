@@ -1,54 +1,73 @@
 ﻿import Ajax from "../shared/ajax"
-import { VpGameMatchUrlBuilder as MatchUrl, VpGameLogoUrlBuilder as LogoUrl, VpGameCategory } from "./helper"
+import { VpGameLogoUrlBuilder as LogoUrl, VpGameCategory } from "./helper"
 import Match from "../models/match"
 import Team from "../models/team"
+import { Wager, WagerTeam } from "../models/wager"
 import Tournament from "../models/tournament"
-import { Status } from "../enums/status"
-import { Category } from "../enums/category"
 
 export class VpGame {
     public async getMatchesAsync(): Promise<Array<Match>> {
-        const url = new MatchUrl().withStatus(Status.Open)
-            .withCategory(Category.None)
-            .build();
+        const url = "/api/v1/vpgame/match";
 
         return new Promise<Match[]>((resolve, reject) => {
-
             Ajax.get<VpGameMatch[]>(url)
                 .success(data => {
                     if (data === null) {
                         return;
                     }
 
-                    const matches = data.map(m => this.map(m));
+                    const matches = data.map(m => this.mapMatch(m));
                     resolve(matches);
                 })
                 .send();
         });
     }
 
-    private map(m: VpGameMatch): Match {
+    public async getWagersAsync(scheduleId: number): Promise<Array<Wager>> {
+        const url = "/api/v1/vpgame/wager/" + scheduleId;
+
+        return new Promise<Wager[]>((resolve, reject) => {
+            Ajax.get<VpGameWager[]>(url)
+                .success(data => {
+                    if (data === null) {
+                        return;
+                    }
+
+                    const wagers = data.map(w => this.mapWager(w));
+                    resolve(wagers);
+                })
+                .send();
+        });
+    }
+
+    private mapMatch(m: VpGameMatch): Match {
         const tournament = new Tournament(m.tournament.name);
 
         const team1 = new Team(m.team.left.id, m.team.left.name);
-        team1.logoUrl = new LogoUrl().build(m.team.left.logo);
+        team1.logoUrl = LogoUrl.build(m.team.left.logo);
 
         const team2 = new Team(m.team.right.id, m.team.right.name);
-        team2.logoUrl = new LogoUrl().build(m.team.right.logo);
+        team2.logoUrl = LogoUrl.build(m.team.right.logo);
 
         const category = VpGameCategory.getCategory(m.category);
 
         const match = new Match(m.id, new Date(1000 * Number(m.game_time)), team1, team2, category, tournament);
-        match.matchLinkBuilder = this.buildMatchLink;
+        match.matchLink = `http://dota2.vpgame.com/match/${m.id}.html`;
+        match.scheduleId = m.tournament_schedule_id
 
         return match;
     }
 
-    private buildMatchLink(m: Match): string {
-        return `http://dota2.vpgame.com/match/${m.id}.html`;
+    private mapWager(m: VpGameWager): Wager {
+        const team1 = new WagerTeam(new Team(), m.odd.left.item);
+        const team2 = new WagerTeam(new Team(), m.odd.left.item);
+
+        const wager = new Wager(m.id, new Date(1000 * Number(m.game_time)), m.mode_name, team1, team2);
+        wager.status = m.status_name;
+
+        return wager;
     }
 }
-
 
 interface VpGameMatch {
     category: string;
@@ -56,6 +75,26 @@ interface VpGameMatch {
     game_time: number;
     team: VpGameMatchTeams;
     tournament: VpGameTournament;
+    tournament_schedule_id: number;
+}
+
+interface VpGameWager {
+    id: number;
+    game_time: number;
+    handicap: string;
+    handicap_team: string;
+    mode_name: string;
+    odd: VpGameOdds;
+    status_name: string;
+}
+
+interface VpGameOdds {
+    left: VpGameOdd;
+    right: VpGameOdd;
+}
+interface VpGameOdd {
+    item: number;
+    victory: string;
 }
 
 interface VpGameMatchTeams {

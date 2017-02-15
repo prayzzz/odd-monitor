@@ -6,31 +6,19 @@ namespace PlayTheOdds.VPGame
 {
     public class Envelope<TBody>
     {
-        [JsonProperty("success")]
-        public bool Success { get; set; }
+        [JsonProperty("body")]
+        public List<JObject> Body { get; set; }
+
+        [JsonProperty("current_time")]
+        public int CurrentTime { get; set; }
 
         [JsonProperty("message")]
         public string Message { get; set; }
 
-        [JsonProperty("body")]
-        public List<JObject> Body { get; set; }
-
         [JsonProperty("status")]
         public int Status { get; set; }
 
-        [JsonProperty("current_time")]
-        public int CurrentTime { get; set; }
-    }
-
-    public class Match
-    {
-        public JObject Body { get; set; }
-
-        public int ScheduleId => Body.Value<int>("tournament_schedule_id");
-    }
-
-    public class Odd
-    {
-        public JObject Body { get; set; }
+        [JsonProperty("success")]
+        public bool Success { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
-namespace PlayTheOdds.VPGame.Matches
+namespace PlayTheOdds.VPGame.Match
 {
     [Route("api/v1/vpgame/match")]
     public class MatchController : Controller

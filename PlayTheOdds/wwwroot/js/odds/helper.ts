@@ -1,5 +1,5 @@
 ﻿import { Category } from "../enums/category"
-import { Status } from "../enums/status"
+import { MatchStatus } from "../enums/status"
 
 export class VpGameMatchUrlBuilder {
     private readonly baseUrl = "/api/v1/vpgame/match";
@@ -23,7 +23,7 @@ export class VpGameMatchUrlBuilder {
         return this;
     }
 
-    public withStatus(status: Status): VpGameMatchUrlBuilder {
+    public withStatus(status: MatchStatus): VpGameMatchUrlBuilder {
         this.status = VpGameStatus.getStatus(status);
         return this;
     }
@@ -43,10 +43,8 @@ export class VpGameMatchUrlBuilder {
 }
 
 export class VpGameLogoUrlBuilder {
-    private readonly base = "http://thumb.vpgcdn.com/crop/91x55/";
-
-    public build(id: string): string {
-        return this.base + id;
+    public static build(id: string): string {
+        return "http://thumb.vpgcdn.com/crop/91x55/" + id;
     }
 }
 
@@ -91,13 +89,13 @@ export class VpGameCategory {
 }
 
 export class VpGameStatus {
-    public static getStatus(status: Status): string {
+    public static getStatus(status: MatchStatus): string {
         switch (status) {
-            case Status.Open:
+            case MatchStatus.Open:
                 return "open";
-            case Status.Live:
+            case MatchStatus.Live:
                 return "start";
-            case Status.Closed:
+            case MatchStatus.Closed:
                 return "close";
             default:
                 throw "Unsupported staus";

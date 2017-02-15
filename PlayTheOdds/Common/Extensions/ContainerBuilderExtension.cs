@@ -12,9 +12,9 @@ namespace PlayTheOdds.Common.Extensions
         public static void InjectDependencies(this ContainerBuilder builder, Type assemblyType)
         {
             var injectableTypes = assemblyType.GetTypeInfo()
-                                              .Assembly
-                                              .ExportedTypes
-                                              .Where(t => t.GetTypeInfo().GetCustomAttribute<InjectAttribute>() != null);
+                .Assembly
+                .ExportedTypes
+                .Where(t => t.GetTypeInfo().GetCustomAttribute<InjectAttribute>() != null);
 
             foreach (var type in injectableTypes)
             {

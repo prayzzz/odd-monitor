@@ -3,7 +3,7 @@
 import { VpGame } from "../odds/vpGame"
 import Ajax from "../shared/ajax"
 import Timespan from "../shared/timespan"
-import * as Enum from "../enums/enums"
+import * as Enums from "../enums/enums"
 import MatchViewModel from "../viewModels/matchViewModel";
 
 interface ICategoryFilter { [c: string]: boolean }
@@ -28,7 +28,6 @@ export default class MainViewModel {
         this.startMatchLoading();
     }
 
-
     public filterChanged(parent: MainViewModel) {
         localStorage.setItem("filter", JSON.stringify(parent.filter));
 
@@ -41,14 +40,14 @@ export default class MainViewModel {
             }
 
             // filter by category
-            if (parent.filter[Enum.Category[m.category]]) {
+            if (parent.filter[Enums.Category[m.category]]) {
                 parent.filteredMatches.push(m);
             }
         });
     }
 
-    public getImagePath(category: Enum.Category): string {
-        const name = Enum.Category[category].toLowerCase();
+    public getImagePath(category: Enums.Category): string {
+        const name = Enums.Category[category].toLowerCase();
         return `/img/category/${name}_64.png`;
     }
 
@@ -67,11 +66,11 @@ export default class MainViewModel {
     }
 
     private initFilter(): void {
-        this.filter[Enum.Category[Enum.Category.Basketball]] = true;
-        this.filter[Enum.Category[Enum.Category.Csgo]] = true;
-        this.filter[Enum.Category[Enum.Category.Dota2]] = true;
-        this.filter[Enum.Category[Enum.Category.Soccer]] = true;
-        this.filter[Enum.Category[Enum.Category.Tennis]] = true;
+        this.filter[Enums.Category[Enums.Category.Basketball]] = true;
+        this.filter[Enums.Category[Enums.Category.Csgo]] = true;
+        this.filter[Enums.Category[Enums.Category.Dota2]] = true;
+        this.filter[Enums.Category[Enums.Category.Soccer]] = true;
+        this.filter[Enums.Category[Enums.Category.Tennis]] = true;
 
         const storedFilterStr = localStorage.getItem("filter");
         if (storedFilterStr) {
