@@ -1,0 +1,446 @@
+﻿{
+  "success": false,
+  "message": "OK",
+  "body": [
+    {
+      "id": "10125349",
+      "round": "BO3",
+      "status": "normal",
+      "victory": "0",
+      "type": "1",
+      "category": "dota",
+      "mode": "1",
+      "mode_name": "Match Winner",
+      "name": "Which team will be the whole match winner ?",
+      "desc": "",
+      "verify_status": "normal",
+      "handicap": "0",
+      "handicap_team": "none",
+      "game_time": "1487282400",
+      "date": "2017-02-17 05:00:00",
+      "tournament_schedule_id": "100077391",
+      "bet_type": "all",
+      "status_name": "6 min later",
+      "score": "0.0",
+      "left_team_score": "0",
+      "right_team_score": "0",
+      "lock_bet_time": 0,
+      "tournament": {
+        "name": "Elimination Mode 3.0",
+        "logo": "f29236.png",
+        "category": "dota"
+      },
+      "team": {
+        "left": {
+          "id": "100003582",
+          "name": "Team Onyx",
+          "logo": "9a4d35ea.png",
+          "steam_team_id": "0"
+        },
+        "right": {
+          "id": "100000165",
+          "name": " compLexity Gaming",
+          "logo": "233b58a19.png",
+          "steam_team_id": "3"
+        }
+      },
+      "odd": {
+        "left": {
+          "id": "100416097",
+          "item": "0.96",
+          "gold": "0.96",
+          "victory": "lose"
+        },
+        "right": {
+          "id": "100416100",
+          "item": "0.94",
+          "gold": "0.94",
+          "victory": "lose"
+        }
+      },
+      "support": {
+        "left": 54,
+        "right": 45
+      },
+      "schedule": {
+        "left_team_id": "100003582",
+        "right_team_id": "100000165",
+        "left_team_name": "Team Onyx",
+        "right_team_name": " compLexity Gaming",
+        "left_team_logo": "9a4d35ea.png",
+        "right_team_logo": "233b58a19.png",
+        "left_steam_team_id": "0",
+        "right_steam_team_id": "3",
+        "status": "normal",
+        "status_name": "进行中"
+      }
+    },
+    {
+      "id": "10125307",
+      "round": "BO1",
+      "status": "normal",
+      "victory": "0",
+      "type": "1",
+      "category": "csgo",
+      "mode": "1",
+      "mode_name": "Match Winner",
+      "name": "Which team will be the whole match winner ?",
+      "desc": "",
+      "verify_status": "normal",
+      "handicap": "0",
+      "handicap_team": "none",
+      "game_time": "1487283300",
+      "date": "2017-02-17 05:15:00",
+      "tournament_schedule_id": "100077382",
+      "bet_type": "all",
+      "status_name": "21 min later",
+      "score": "0.0",
+      "left_team_score": "0",
+      "right_team_score": "0",
+      "lock_bet_time": 0,
+      "tournament": {
+        "name": "DreamHack ",
+        "logo": "14ee9b65b.png",
+        "category": "csgo"
+      },
+      "team": {
+        "left": {
+          "id": "100000210",
+          "name": "Renegades",
+          "logo": "164b200856.png",
+          "steam_team_id": "0"
+        },
+        "right": {
+          "id": "100000052",
+          "name": "Natus Vincere",
+          "logo": "2ed7a37fa.png",
+          "steam_team_id": "0"
+        }
+      },
+      "odd": {
+        "left": {
+          "id": "100416013",
+          "item": "6.33",
+          "gold": "6.33",
+          "victory": "lose"
+        },
+        "right": {
+          "id": "100416016",
+          "item": "0.14",
+          "gold": "0.14",
+          "victory": "lose"
+        }
+      },
+      "support": {
+        "left": 23,
+        "right": 76
+      },
+      "schedule": {
+        "left_team_id": "100000210",
+        "right_team_id": "100000052",
+        "left_team_name": "Renegades",
+        "right_team_name": "Natus Vincere",
+        "left_team_logo": "164b200856.png",
+        "right_team_logo": "2ed7a37fa.png",
+        "left_steam_team_id": "0",
+        "right_steam_team_id": "0",
+        "status": "normal",
+        "status_name": "进行中"
+      }
+    },
+    {
+      "id": "10125211",
+      "round": "BO1",
+      "status": "normal",
+      "victory": "0",
+      "type": "1",
+      "category": "csgo",
+      "mode": "1",
+      "mode_name": "Match Winner",
+      "name": "Which team will be the whole match winner ?",
+      "desc": "",
+      "verify_status": "normal",
+      "handicap": "0",
+      "handicap_team": "none",
+      "game_time": "1487288400",
+      "date": "2017-02-17 06:40:00",
+      "tournament_schedule_id": "100077352",
+      "bet_type": "all",
+      "status_name": "2 h later",
+      "score": "0.0",
+      "left_team_score": "0",
+      "right_team_score": "0",
+      "lock_bet_time": 0,
+      "tournament": {
+        "name": "DreamHack ",
+        "logo": "14ee9b65b.png",
+        "category": "csgo"
+      },
+      "team": {
+        "left": {
+          "id": "100000056",
+          "name": "Astralis",
+          "logo": "209fb1270.png",
+          "steam_team_id": "0"
+        },
+        "right": {
+          "id": "100000000",
+          "name": "OpTic",
+          "logo": "219b0948.png",
+          "steam_team_id": "0"
+        }
+      },
+      "odd": {
+        "left": {
+          "id": "100415833",
+          "item": "0.59",
+          "gold": "0.59",
+          "victory": "lose"
+        },
+        "right": {
+          "id": "100415836",
+          "item": "1.54",
+          "gold": "1.54",
+          "victory": "lose"
+        }
+      },
+      "support": {
+        "left": 69,
+        "right": 30
+      },
+      "schedule": {
+        "left_team_id": "100000056",
+        "right_team_id": "100000000",
+        "left_team_name": "Astralis",
+        "right_team_name": "OpTic",
+        "left_team_logo": "209fb1270.png",
+        "right_team_logo": "219b0948.png",
+        "left_steam_team_id": "0",
+        "right_steam_team_id": "0",
+        "status": "normal",
+        "status_name": "进行中"
+      }
+    },
+    {
+      "id": "10125370",
+      "round": "BO1",
+      "status": "normal",
+      "victory": "0",
+      "type": "1",
+      "category": "basketball",
+      "mode": "2",
+      "mode_name": "Handicap",
+      "name": "If the whole match has a handicap with WASHINGTON-2.5, which team will win the bet ?",
+      "desc": "",
+      "verify_status": "normal",
+      "handicap": "2.5",
+      "handicap_team": "right",
+      "game_time": "1487289600",
+      "date": "2017-02-17 07:00:00",
+      "tournament_schedule_id": "100077397",
+      "bet_type": "all",
+      "status_name": "2 h later",
+      "score": "0.0",
+      "left_team_score": "0",
+      "right_team_score": "0",
+      "lock_bet_time": 0,
+      "tournament": {
+        "name": "NBA",
+        "logo": "1535546b7.png",
+        "category": "basketball"
+      },
+      "team": {
+        "left": {
+          "id": "100000065",
+          "name": "IND",
+          "logo": "861042a4b4.png",
+          "steam_team_id": "0"
+        },
+        "right": {
+          "id": "100000099",
+          "name": "WASHINGTON",
+          "logo": "b04ead80.png",
+          "steam_team_id": "0"
+        }
+      },
+      "odd": {
+        "left": {
+          "id": "100416139",
+          "item": "1.42",
+          "gold": "1.42",
+          "victory": "lose"
+        },
+        "right": {
+          "id": "100416142",
+          "item": "0.64",
+          "gold": "0.64",
+          "victory": "lose"
+        }
+      },
+      "support": {
+        "left": 50,
+        "right": 50
+      },
+      "schedule": {
+        "left_team_id": "100000065",
+        "right_team_id": "100000099",
+        "left_team_name": "IND",
+        "right_team_name": "WASHINGTON",
+        "left_team_logo": "861042a4b4.png",
+        "right_team_logo": "b04ead80.png",
+        "left_steam_team_id": "0",
+        "right_steam_team_id": "0",
+        "status": "normal",
+        "status_name": "进行中"
+      }
+    },
+    {
+      "id": "10125376",
+      "round": "BO1",
+      "status": "normal",
+      "victory": "0",
+      "type": "1",
+      "category": "basketball",
+      "mode": "2",
+      "mode_name": "Handicap",
+      "name": "If the whole match has a handicap with CHI-1.5, which team will win the bet ?",
+      "desc": "",
+      "verify_status": "normal",
+      "handicap": "1.5",
+      "handicap_team": "left",
+      "game_time": "1487293200",
+      "date": "2017-02-17 08:00:00",
+      "tournament_schedule_id": "100077400",
+      "bet_type": "all",
+      "status_name": "3 h later",
+      "score": "0.0",
+      "left_team_score": "0",
+      "right_team_score": "0",
+      "lock_bet_time": 0,
+      "tournament": {
+        "name": "NBA",
+        "logo": "1535546b7.png",
+        "category": "basketball"
+      },
+      "team": {
+        "left": {
+          "id": "100000067",
+          "name": "CHI",
+          "logo": "75c3fdf1f6.png",
+          "steam_team_id": "0"
+        },
+        "right": {
+          "id": "100000066",
+          "name": "CEL",
+          "logo": "24b45cbb.png",
+          "steam_team_id": "0"
+        }
+      },
+      "odd": {
+        "left": {
+          "id": "100416151",
+          "item": "2.85",
+          "gold": "2.85",
+          "victory": "lose"
+        },
+        "right": {
+          "id": "100416154",
+          "item": "0.32",
+          "gold": "0.32",
+          "victory": "lose"
+        }
+      },
+      "support": {
+        "left": 43,
+        "right": 56
+      },
+      "schedule": {
+        "left_team_id": "100000067",
+        "right_team_id": "100000066",
+        "left_team_name": "CHI",
+        "right_team_name": "CEL",
+        "left_team_logo": "75c3fdf1f6.png",
+        "right_team_logo": "24b45cbb.png",
+        "left_steam_team_id": "0",
+        "right_steam_team_id": "0",
+        "status": "normal",
+        "status_name": "进行中"
+      }
+    },
+    {
+      "id": "10125235",
+      "round": "BO1",
+      "status": "normal",
+      "victory": "0",
+      "type": "1",
+      "category": "csgo",
+      "mode": "1",
+      "mode_name": "Match Winner",
+      "name": "Which team will be the whole match winner ?",
+      "desc": "",
+      "verify_status": "normal",
+      "handicap": "0",
+      "handicap_team": "none",
+      "game_time": "1487293500",
+      "date": "2017-02-17 08:05:00",
+      "tournament_schedule_id": "100077361",
+      "bet_type": "all",
+      "status_name": "3 h later",
+      "score": "0.0",
+      "left_team_score": "0",
+      "right_team_score": "0",
+      "lock_bet_time": 0,
+      "tournament": {
+        "name": "DreamHack ",
+        "logo": "14ee9b65b.png",
+        "category": "csgo"
+      },
+      "team": {
+        "left": {
+          "id": "100000058",
+          "name": "Virtus.Pro",
+          "logo": "e4734.png",
+          "steam_team_id": "0"
+        },
+        "right": {
+          "id": "100000071",
+          "name": "Gambit",
+          "logo": "19eb153be.png",
+          "steam_team_id": "0"
+        }
+      },
+      "odd": {
+        "left": {
+          "id": "100415881",
+          "item": "1.24",
+          "gold": "1.24",
+          "victory": "lose"
+        },
+        "right": {
+          "id": "100415884",
+          "item": "0.73",
+          "gold": "0.73",
+          "victory": "lose"
+        }
+      },
+      "support": {
+        "left": 70,
+        "right": 29
+      },
+      "schedule": {
+        "left_team_id": "100000058",
+        "right_team_id": "100000071",
+        "left_team_name": "Virtus.Pro",
+        "right_team_name": "Gambit",
+        "left_team_logo": "e4734.png",
+        "right_team_logo": "19eb153be.png",
+        "left_steam_team_id": "0",
+        "right_steam_team_id": "0",
+        "status": "normal",
+        "status_name": "进行中"
+      }
+    }
+  ],
+  "status": 200,
+  "current_time": 1487282016
+}

@@ -1,0 +1,202 @@
+{
+  "success": false,
+  "message": "OK",
+  "body": [
+    {
+      "id": "10125445",
+      "lock_bet_time": "0",
+      "mode": "1",
+      "status": "normal",
+      "mode_name": "Match Winner",
+      "status_name": "11 min later",
+      "game_time": "1487339100",
+      "left_odd": "0.15",
+      "right_odd": "5.90",
+      "date": "2017-02-17 21:45:00",
+      "handicap": "0",
+      "handicap_team": "none",
+      "left_team": "Geek Fam",
+      "right_team": "Trust",
+      "victory": "0",
+      "odd": {
+        "left": {
+          "id": "100416289",
+          "item": "0.15",
+          "gold": "0.15",
+          "victory": "lose"
+        },
+        "right": {
+          "id": "100416292",
+          "item": "5.90",
+          "gold": "5.90",
+          "victory": "lose"
+        }
+      },
+      "team": {
+        "left": {
+          "short_name": "Geek Fam"
+        },
+        "right": {
+          "short_name": "Trust"
+        }
+      }
+    },
+    {
+      "id": "10125448",
+      "lock_bet_time": "0",
+      "mode": "2",
+      "status": "normal",
+      "mode_name": "Handicap",
+      "status_name": "11 min later",
+      "game_time": "1487339100",
+      "left_odd": "0.10",
+      "right_odd": "9.30",
+      "date": "2017-02-17 21:45:00",
+      "handicap": "1.5",
+      "handicap_team": "right",
+      "left_team": "Geek Fam",
+      "right_team": "Trust",
+      "victory": "0",
+      "odd": {
+        "left": {
+          "id": "100416295",
+          "item": "0.10",
+          "gold": "0.10",
+          "victory": "lose"
+        },
+        "right": {
+          "id": "100416298",
+          "item": "9.30",
+          "gold": "9.30",
+          "victory": "lose"
+        }
+      },
+      "team": {
+        "left": {
+          "short_name": "Geek Fam"
+        },
+        "right": {
+          "short_name": "Trust"
+        }
+      }
+    },
+    {
+      "id": "10125457",
+      "lock_bet_time": "0",
+      "mode": "2",
+      "status": "normal",
+      "mode_name": "Handicap",
+      "status_name": "11 min later",
+      "game_time": "1487339100",
+      "left_odd": "0.73",
+      "right_odd": "1.24",
+      "date": "2017-02-17 21:45:00",
+      "handicap": "1.5",
+      "handicap_team": "left",
+      "left_team": "Geek Fam",
+      "right_team": "Trust",
+      "victory": "0",
+      "odd": {
+        "left": {
+          "id": "100416313",
+          "item": "0.73",
+          "gold": "0.73",
+          "victory": "lose"
+        },
+        "right": {
+          "id": "100416316",
+          "item": "1.24",
+          "gold": "1.24",
+          "victory": "lose"
+        }
+      },
+      "team": {
+        "left": {
+          "short_name": "Geek Fam"
+        },
+        "right": {
+          "short_name": "Trust"
+        }
+      }
+    },
+    {
+      "id": "10125451",
+      "lock_bet_time": "0",
+      "mode": "3",
+      "status": "normal",
+      "mode_name": "Game1 10kills",
+      "status_name": "11 min later",
+      "game_time": "1487339100",
+      "left_odd": "0.52",
+      "right_odd": "1.72",
+      "date": "2017-02-17 21:45:00",
+      "handicap": "0",
+      "handicap_team": "none",
+      "left_team": "Geek Fam",
+      "right_team": "Trust",
+      "victory": "0",
+      "odd": {
+        "left": {
+          "id": "100416301",
+          "item": "0.52",
+          "gold": "0.52",
+          "victory": "lose"
+        },
+        "right": {
+          "id": "100416304",
+          "item": "1.72",
+          "gold": "1.72",
+          "victory": "lose"
+        }
+      },
+      "team": {
+        "left": {
+          "short_name": "Geek Fam"
+        },
+        "right": {
+          "short_name": "Trust"
+        }
+      }
+    },
+    {
+      "id": "10125454",
+      "lock_bet_time": "0",
+      "mode": "4",
+      "status": "normal",
+      "mode_name": "Game2 10kills",
+      "status_name": "56 min later",
+      "game_time": "1487341800",
+      "left_odd": "0.15",
+      "right_odd": "6.10",
+      "date": "2017-02-17 22:30:00",
+      "handicap": "0",
+      "handicap_team": "none",
+      "left_team": "Geek Fam",
+      "right_team": "Trust",
+      "victory": "0",
+      "odd": {
+        "left": {
+          "id": "100416307",
+          "item": "0.15",
+          "gold": "0.15",
+          "victory": "lose"
+        },
+        "right": {
+          "id": "100416310",
+          "item": "6.10",
+          "gold": "6.10",
+          "victory": "lose"
+        }
+      },
+      "team": {
+        "left": {
+          "short_name": "Geek Fam"
+        },
+        "right": {
+          "short_name": "Trust"
+        }
+      }
+    }
+  ],
+  "status": 200
+}
