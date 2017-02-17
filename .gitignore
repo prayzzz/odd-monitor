@@ -243,5 +243,5 @@ ModelManifest.xml
 .vscode/
 
 *.lock
-PlayTheOdds/wwwroot/js/**/*.js
-PlayTheOdds/wwwroot/dist/
+wwwroot/js/**/*.js
+wwwroot/dist/
