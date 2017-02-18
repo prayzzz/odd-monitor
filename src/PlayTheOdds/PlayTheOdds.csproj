@@ -1,10 +1,17 @@
 ﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
+    <RuntimeIdentifiers>win10-x64;ubuntu.16.04-x64</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="wwwroot\node_modules\**" />
+  <Content Remove="wwwroot\node_modules\**" />
+    <EmbeddedResource Remove="wwwroot\node_modules\**" />
+    <None Remove="wwwroot\node_modules\**" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.0" />

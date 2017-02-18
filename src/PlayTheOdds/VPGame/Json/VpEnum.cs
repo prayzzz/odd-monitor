@@ -62,24 +62,29 @@ namespace PlayTheOdds.VPGame.Json
                 case "canceled":
                     return WagerStatus.Canceled;
                 default:
-                {
-                    if (value.Contains("later"))
                     {
-                        return WagerStatus.Open;
-                    }
+                        if (value.Contains("later"))
+                        {
+                            return WagerStatus.Open;
+                        }
 
-                    if (value.Contains("settling"))
-                    {
-                        return WagerStatus.Settled;
-                    }
+                        if (value.Contains("now"))
+                        {
+                            return WagerStatus.Live;
+                        }
 
-                    if (value.Contains("canceling"))
-                    {
-                        return WagerStatus.Canceled;
-                    }
+                        if (value.Contains("settling"))
+                        {
+                            return WagerStatus.Settled;
+                        }
 
-                    throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WagerStatus");
-                }
+                        if (value.Contains("canceling"))
+                        {
+                            return WagerStatus.Canceled;
+                        }
+
+                        throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WagerStatus");
+                    }
             }
         }
     }
