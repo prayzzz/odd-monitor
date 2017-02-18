@@ -6076,6 +6076,7 @@ class MainViewModel {
     }
     filterChanged(parent) {
         localStorage.setItem("filter", JSON.stringify(parent.filter));
+        let filteredMatches = new Array();
         parent.filteredMatches.removeAll();
         parent.matches().forEach(m => {
             // dont show matches which started over 5Minutes ago
@@ -6084,9 +6085,10 @@ class MainViewModel {
             }
             // filter by category
             if (parent.filter[__WEBPACK_IMPORTED_MODULE_1__models_enums__["a" /* Category */][m.category]]) {
-                parent.filteredMatches.push(m);
+                filteredMatches.push(m);
             }
         });
+        parent.filteredMatches(filteredMatches.sort((a, b) => a.startsIn - b.startsIn));
     }
     getImagePath(category) {
         const name = __WEBPACK_IMPORTED_MODULE_1__models_enums__["a" /* Category */][category].toLowerCase();
@@ -6344,12 +6346,13 @@ class MatchViewModel {
         this.wagers = match.wagers.map(m => new __WEBPACK_IMPORTED_MODULE_3__wagerViewModel__["a" /* default */](m, match.teamLeft, match.teamRight));
         this.filteredWagers = __WEBPACK_IMPORTED_MODULE_0_knockout__["observableArray"]();
         this.formattedDate = __WEBPACK_IMPORTED_MODULE_0_knockout__["observable"]();
-        this.initFormattedDate();
         this.wagers
             .filter(w => w.wager.status === __WEBPACK_IMPORTED_MODULE_1__models_enums__["b" /* WagerStatus */].Open || w.wager.status === __WEBPACK_IMPORTED_MODULE_1__models_enums__["b" /* WagerStatus */].Live)
             .forEach(w => {
             this.filteredWagers.push(w);
         });
+        this.nextWagerStart = this.getClosestWagerStartDate();
+        this.initFormattedDate();
     }
     get tournamentName() {
         return this.match.tournamentName;
@@ -6369,11 +6372,24 @@ class MatchViewModel {
     get matchFormat() {
         return __WEBPACK_IMPORTED_MODULE_1__models_enums__["c" /* MatchFormat */][this.match.matchFormat].toUpperCase();
     }
+    getClosestWagerStartDate() {
+        if (this.wagers.length == 0) {
+            return this.match.startDate;
+        }
+        let now = new Date();
+        let date = this.wagers[this.wagers.length - 1].wager.startDate;
+        this.filteredWagers().forEach(w => {
+            if (w.wager.startDate > now && w.wager.startDate < date) {
+                date = w.wager.startDate;
+            }
+        });
+        return date;
+    }
     /**
      * Time to start in milliseconds
      */
     get startsIn() {
-        return this.match.startDate.getTime() - new Date().getTime();
+        return this.nextWagerStart.getTime() - new Date().getTime();
     }
     /**
      * Time to start in in mm:ss format
@@ -6385,7 +6401,7 @@ class MatchViewModel {
     }
     get isLive() {
         const current = new Date().getTime();
-        const match = this.match.startDate.getTime();
+        const match = this.nextWagerStart.getTime();
         return match < current;
     }
     dispose() {

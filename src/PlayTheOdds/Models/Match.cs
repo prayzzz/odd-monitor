@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PlayTheOdds.Models
 {
-    public class Match : IEquatable<Match>
+    public class Match : IEquatable<Match>, IEqualityComparer<Match>
     {
         public Dictionary<string, string> AdditionalData { get; } = new Dictionary<string, string>();
 
@@ -30,6 +30,16 @@ namespace PlayTheOdds.Models
         public bool Equals(Match other)
         {
             return Id == other.Id;
+        }
+
+        public bool Equals(Match x, Match y)
+        {
+            return x.Id == y.Id;
+        }
+
+        public int GetHashCode(Match obj)
+        {
+            return obj.GetHashCode();
         }
     }
 }

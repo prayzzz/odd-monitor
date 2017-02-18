@@ -7,6 +7,7 @@ import WagerViewModel from "./wagerViewModel"
 
 export default class MatchViewModel {
     private countdownHandle: number;
+    private nextWagerStart: Date;
     public readonly formattedDate: KnockoutObservable<string>;
     public readonly match: Match;
     public readonly wagers: WagerViewModel[];
@@ -19,13 +20,14 @@ export default class MatchViewModel {
         this.filteredWagers = ko.observableArray<WagerViewModel>();
         this.formattedDate = ko.observable<string>();
 
-        this.initFormattedDate();
-
         this.wagers
             .filter(w => w.wager.status === Enums.WagerStatus.Open || w.wager.status === Enums.WagerStatus.Live)
             .forEach(w => {
                 this.filteredWagers.push(w)
             });
+
+        this.nextWagerStart = this.getClosestWagerStartDate();
+        this.initFormattedDate();
     }
 
     public get tournamentName(): string {
@@ -52,11 +54,27 @@ export default class MatchViewModel {
         return Enums.MatchFormat[this.match.matchFormat].toUpperCase();
     }
 
+    public getClosestWagerStartDate(): Date {
+        if (this.wagers.length == 0) {
+            return this.match.startDate;
+        }
+
+        let now = new Date();
+        let date = this.wagers[this.wagers.length - 1].wager.startDate;
+        this.filteredWagers().forEach(w => {
+            if (w.wager.startDate > now && w.wager.startDate < date) {
+                date = w.wager.startDate;
+            }
+        })
+
+        return date;
+    }
+
     /**
      * Time to start in milliseconds
      */
     public get startsIn(): number {
-        return this.match.startDate.getTime() - new Date().getTime();
+        return this.nextWagerStart.getTime() - new Date().getTime();
     }
 
     /**
@@ -71,7 +89,7 @@ export default class MatchViewModel {
 
     public get isLive(): boolean {
         const current = new Date().getTime();
-        const match = this.match.startDate.getTime();
+        const match = this.nextWagerStart.getTime();
 
         return match < current;
     }

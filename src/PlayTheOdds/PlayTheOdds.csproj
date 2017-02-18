@@ -7,17 +7,13 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="wwwroot\node_modules\**" />
-  <Content Remove="wwwroot\node_modules\**" />
-    <EmbeddedResource Remove="wwwroot\node_modules\**" />
-    <None Remove="wwwroot\node_modules\**" />
+    <Content Remove="wwwroot\node_modules\**" CopyToPublishDirectory="Never" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.0.0" />
-    <PackageReference Include="Easy.MessageHub" Version="3.0.0" />
     <PackageReference Include="prayzzz.Common" Version="1.0.0-ci-25" />
     <PackageReference Include="Serilog" Version="2.4.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="1.4.0" />
@@ -27,7 +23,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0-rc1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="1.0.0-rc1" />
   </ItemGroup>
-  <Target Name="WebPack" AfterTargets="Build" Condition="$(RunWebpack) == true">
+  <Target Name="Prepublish" BeforeTargets="Publish">
+    <Exec Command="yarn" WorkingDirectory="wwwroot" />
     <Exec Command="node_modules\.bin\webpack.cmd" WorkingDirectory="wwwroot" />
   </Target>
 </Project>

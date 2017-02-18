@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using Easy.MessageHub;
 using Microsoft.Extensions.Logging;
 using prayzzz.Common.Attributes;
 using prayzzz.Common.Enums;
 using PlayTheOdds.Common;
+using PlayTheOdds.Common.Extensions;
 using PlayTheOdds.Models;
 
 namespace PlayTheOdds.VPGame.Matches
@@ -28,14 +28,12 @@ namespace PlayTheOdds.VPGame.Matches
         private readonly Timer _refreshWagersTimer;
         private readonly ILogger<MatchLoader> _logger;
         private readonly object _matchDataLock;
-        private readonly IMessageHub _messageHub;
 
         private List<Match> _matchData;
 
-        public MatchLoader(IVpGameApi api, IMessageHub messageHub, ILoggerFactory loggerFactory)
+        public MatchLoader(IVpGameApi api, ILoggerFactory loggerFactory)
         {
             _api = api;
-            _messageHub = messageHub;
             _logger = loggerFactory.CreateLogger<MatchLoader>();
 
             _matchDataLock = new object();
@@ -101,6 +99,7 @@ namespace PlayTheOdds.VPGame.Matches
 
             var matches = liveMatches;
             matches.AddRange(openMatches);
+            matches = matches.DistinctBy(x => x.AdditionalData["scheduleId"]).ToList();
 
             watch.Stop();
             _logger.LogInformation($"{matches.Count} matches loaded in {watch.ElapsedMilliseconds}ms");
@@ -121,8 +120,6 @@ namespace PlayTheOdds.VPGame.Matches
                 {
                     _matchData = matches;
                 }
-
-                _messageHub.Publish(new MatchesLoadedEvent(_matchData));
             }
         }
     }

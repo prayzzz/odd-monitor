@@ -1,7 +1,6 @@
 ﻿using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Easy.MessageHub;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -57,7 +56,6 @@ namespace PlayTheOdds
             builder.Populate(services);
 
             builder.InjectDependencies(GetType());
-            builder.RegisterInstance(MessageHub.Instance).As<IMessageHub>().SingleInstance();
 
             return new AutofacServiceProvider(builder.Build());
         }

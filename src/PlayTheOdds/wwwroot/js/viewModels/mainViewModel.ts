@@ -32,6 +32,8 @@ export default class MainViewModel {
     public filterChanged(parent: MainViewModel) {
         localStorage.setItem("filter", JSON.stringify(parent.filter));
 
+        let filteredMatches = new Array<MatchViewModel>();
+
         parent.filteredMatches.removeAll();
         parent.matches().forEach(m => {
 
@@ -42,9 +44,11 @@ export default class MainViewModel {
 
             // filter by category
             if (parent.filter[Enums.Category[m.category]]) {
-                parent.filteredMatches.push(m);
+                filteredMatches.push(m);
             }
         });
+
+        parent.filteredMatches(filteredMatches.sort((a, b) => a.startsIn - b.startsIn));
     }
 
     public getImagePath(category: Enums.Category): string {
