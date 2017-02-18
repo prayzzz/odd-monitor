@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PlayTheOdds.Common;
 using PlayTheOdds.Models;
 
 namespace PlayTheOdds.VPGame.Json
@@ -9,9 +10,11 @@ namespace PlayTheOdds.VPGame.Json
     {
         private static readonly Type MatchType = typeof(Match);
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override bool CanWrite => false;
+
+        public override bool CanConvert(Type objectType)
         {
-            throw new NotImplementedException("CanWrite is false");
+            return objectType == MatchType;
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -19,24 +22,22 @@ namespace PlayTheOdds.VPGame.Json
             var obj = JObject.Load(reader);
 
             var match = new Match();
-            match.AdditionalData.Add("scheduleId", obj.Value<string>("tournament_schedule_id"));
-            match.Category = VpEnum.GetCategory(obj.Value<string>("category"));
+            match.AdditionalData.Add("scheduleId", obj.ValueAsString("tournament_schedule_id"));
+            match.Category = VpEnum.GetCategory(obj.ValueAsString("category"));
             match.Id = obj.Value<int>("id");
-            match.MatchFormat = VpEnum.GetMatchFormat(obj.Value<string>("round"));
+            match.MatchFormat = VpEnum.GetMatchFormat(obj.ValueAsString("round"));
             match.Site = Site.VpGame;
             match.StartDate = DateTimeOffset.FromUnixTimeSeconds(obj.Value<int>("game_time")).LocalDateTime;
             match.TeamLeft = obj.SelectToken("team.left").ToObject<Team>(serializer);
             match.TeamRight = obj.SelectToken("team.right").ToObject<Team>(serializer);
-            match.TournamentName = obj.SelectToken("tournament.name").Value<string>();
+            match.TournamentName = obj.SelectToken("tournament").ValueAsString("name");
 
             return match;
         }
 
-        public override bool CanWrite => false;
-
-        public override bool CanConvert(Type objectType)
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            return objectType == MatchType;
+            throw new NotImplementedException("CanWrite is false");
         }
     }
 }

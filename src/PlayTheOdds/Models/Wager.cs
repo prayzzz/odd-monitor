@@ -5,9 +5,8 @@ namespace PlayTheOdds.Models
 {
     public class Wager
     {
+        public Dictionary<string, string> AdditionalData { get; } = new Dictionary<string, string>();
         public int Id { get; set; }
-
-        public DateTime StartDate { get; set; }
 
         public string Name { get; set; }
 
@@ -15,6 +14,8 @@ namespace PlayTheOdds.Models
 
         public double OddRight { get; set; }
 
-        public Dictionary<string, string> AdditionalData { get; } = new Dictionary<string, string>();
+        public DateTime StartDate { get; set; }
+
+        public WagerStatus Status { get; set; }
     }
 }

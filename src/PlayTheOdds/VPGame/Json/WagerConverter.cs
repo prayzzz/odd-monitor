@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PlayTheOdds.Common;
 using PlayTheOdds.Models;
 
 namespace PlayTheOdds.VPGame.Json
@@ -9,9 +10,11 @@ namespace PlayTheOdds.VPGame.Json
     {
         private static readonly Type WagerType = typeof(Wager);
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override bool CanWrite => false;
+
+        public override bool CanConvert(Type objectType)
         {
-            throw new NotImplementedException();
+            return objectType == WagerType;
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -19,22 +22,21 @@ namespace PlayTheOdds.VPGame.Json
             var obj = JObject.Load(reader);
 
             var wager = new Wager();
-            wager.AdditionalData.Add("handicap", obj.Value<string>("handicap"));
-            wager.AdditionalData.Add("handicapTeam", obj.Value<string>("handicap_team"));
+            wager.AdditionalData.Add("handicap", obj.ValueAsString("handicap"));
+            wager.AdditionalData.Add("handicapTeam", obj.ValueAsString("handicap_team"));
             wager.Id = obj.Value<int>("id");
+            wager.Name = obj.ValueAsString("mode_name");
             wager.OddLeft = obj.SelectToken("odd.left").Value<double>("item");
             wager.OddRight = obj.SelectToken("odd.right").Value<double>("item");
-            wager.Name = obj.Value<string>("mode_name");
             wager.StartDate = DateTimeOffset.FromUnixTimeSeconds(obj.Value<int>("game_time")).LocalDateTime;
+            wager.Status = VpEnum.GetWagerStatus(obj.ValueAsString("status_name"));
 
             return wager;
         }
 
-        public override bool CanWrite => false;
-
-        public override bool CanConvert(Type objectType)
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            return objectType == WagerType;
+            throw new NotImplementedException();
         }
     }
 }

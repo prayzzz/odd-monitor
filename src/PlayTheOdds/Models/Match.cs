@@ -9,6 +9,8 @@ namespace PlayTheOdds.Models
 
         public Category Category { get; set; }
 
+        public DateTime DateModified { get; set; } = DateTime.Now;
+
         public int Id { get; set; }
 
         public MatchFormat MatchFormat { get; set; }

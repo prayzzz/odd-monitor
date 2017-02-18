@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PlayTheOdds.Common;
 using PlayTheOdds.Models;
 
 namespace PlayTheOdds.VPGame.Json
@@ -9,9 +10,11 @@ namespace PlayTheOdds.VPGame.Json
     {
         private static readonly Type TeamType = typeof(Team);
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override bool CanWrite => false;
+
+        public override bool CanConvert(Type objectType)
         {
-            throw new NotImplementedException("CanWrite is false");
+            return objectType == TeamType;
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -19,18 +22,16 @@ namespace PlayTheOdds.VPGame.Json
             var obj = JObject.Load(reader);
 
             var team = new Team();
-            team.AdditionalData.Add("logoUrl", obj.Value<string>("logo"));
+            team.AdditionalData.Add("logoUrl", obj.ValueAsString("logo"));
             team.Id = obj.Value<int>("id");
-            team.Name = obj.Value<string>("name");
-            
+            team.Name = obj.ValueAsString("name");
+
             return team;
         }
 
-        public override bool CanWrite => false;
-
-        public override bool CanConvert(Type objectType)
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            return objectType == TeamType;
+            throw new NotImplementedException("CanWrite is false");
         }
     }
 }

@@ -10,6 +10,9 @@
     <header class="flex-row">
         <div class="time flex-row v-centered">
             <span data-bind="text: time"></span>
+            <small>
+            &nbsp;(Last Refresh&nbsp; <span data-bind="text: lastRefreshAgo"></span> &nbsp;ago)            
+            </small>
         </div>
         <div class="flex-row strechted right spaced">
             <div>
@@ -36,33 +39,61 @@
 
         <!-- ko foreach: {data: Object.keys(filter), as: '_propkey'} -->
 
-        <input type="checkbox" data-bind="checked: $parent.filter[_propkey], click: $parent.filterChanged($parent)"> <span data-bind="text: _propkey"></span>
+        <input type="checkbox" data-bind="checked: $parent.filter[_propkey], click: $parent.filterChanged($parent)"> <span
+            data-bind="text: _propkey"></span>
 
         <!-- /ko -->
 
     </section>
 
-    <!-- ko foreach: filteredMatches -->
+    <section class="matches">
 
-    <div class="match">
-        <a class="head flex-row v-centered" href="#" data-bind="attr: {href: matchLink }" target="_blank">
-            <div class="flex-row spaced">
-                <img data-bind="attr: { src: $root.getImagePath(category) }" width="24" height="24" />
-                <div style="font-size: 1.1em; text-align: center; width: 4em;"><span data-bind="text: formattedDate"></span></div>
-                <img data-bind="attr: { src: team1.logoUrl }" height="24" />
-                <div><span data-bind="text: team1.name"></span> vs. <span data-bind="text: team2.name"></span></div>
-                <img data-bind="attr: { src: team2.logoUrl }" height="24" />
-            </div>
-            <div class="category flex-row right spaced">
-                <div><span data-bind="text: tournament.name"></span></div>
-            </div>
-        </a>
-        <div class="body">
+        <!-- ko foreach: filteredMatches -->
 
+        <div class="match">
+            <a class="head flex-row v-centered" href="#" data-bind="attr: {href: matchLink }" target="_blank">
+                <div class="flex-row spaced">
+                    <img data-bind="attr: { src: $root.getImagePath(category) }" width="24" height="24" />
+                    <div style="font-size: 1.1em; text-align: center; width: 4em;"><span data-bind="text: formattedDate"></span></div>
+                </div>
+                <div class="flex-row strechted h-centered" style="font-size: 1.1em;">
+                    <div class="team-logo"><img data-bind="attr: { src: teamLeft.logoUrl }" height="24" /></div>
+                    <div><span data-bind="text: teamLeft.name"></span> vs. <span data-bind="text: teamRight.name"></span></div>
+                    <div class="team-logo"><img data-bind="attr: { src: teamRight.logoUrl }" height="24" /></div>
+                </div>
+                <div class="flex-row right spaced">
+                    <div><span data-bind="text: tournamentName"></span></div>
+                </div>
+            </a>
+            <div class="body">
+
+                <!-- ko foreach: filteredWagers -->
+
+                <div class="wager">
+                    <div class="name">
+                        <span data-bind="text: nameWithHandicap"></span>
+                    </div>
+
+                    <div class="odd text-right">
+                        <span data-bind="text: oddLeft"></span>
+                    </div>
+                    <div> <span>:</span> </div>
+                    <div class="odd">
+                        <span data-bind="text: oddRight"></span>
+                    </div>
+                    <div class="flex-row strechted right">
+                        <span data-bind="text: formattedStatus"></span>
+                    </div>
+                </div>
+
+                <!-- /ko -->
+
+            </div>
         </div>
-    </div>
 
-    <!-- /ko -->
+        <!-- /ko -->
+
+    </section>
 
     <script src="dist/bundle.js" type="text/javascript"></script>
 </body>

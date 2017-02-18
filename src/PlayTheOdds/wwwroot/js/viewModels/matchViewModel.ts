@@ -1,61 +1,62 @@
 ﻿import * as ko from "knockout";
 
-import { VpGame } from "../odds/vpGame"
-import Match from "../models/match"
+import * as Enums from "../models/enums";
+import { Match, Team } from "../models/models"
 import Timespan from "../shared/timespan"
-import Tournament from "../models/tournament";
-import Team from "../models/team";
-import { Wager } from "../models/wager";
-import { Category } from "../enums/category";
+import WagerViewModel from "./wagerViewModel"
 
 export default class MatchViewModel {
-    private readonly vpGame = new VpGame();
     private countdownHandle: number;
-
     public readonly formattedDate: KnockoutObservable<string>;
     public readonly match: Match;
-    public readonly wagers: KnockoutObservableArray<Wager>;
+    public readonly wagers: WagerViewModel[];
+    public readonly filteredWagers: KnockoutObservableArray<WagerViewModel>;
 
     constructor(match: Match) {
         this.match = match;
+        this.wagers = match.wagers.map(m => new WagerViewModel(m, match.teamLeft, match.teamRight));
+
+        this.filteredWagers = ko.observableArray<WagerViewModel>();
         this.formattedDate = ko.observable<string>();
-        this.wagers = ko.observableArray<Wager>();
 
         this.initFormattedDate();
 
-        this.vpGame.getWagersAsync(this.match.scheduleId)
-            .then(wagers => {
-                this.wagers.removeAll();
-
-                wagers.forEach(w => this.wagers.push(w));
-            })
+        this.wagers
+            .filter(w => w.wager.status === Enums.WagerStatus.Open || w.wager.status === Enums.WagerStatus.Live)
+            .forEach(w => {
+                this.filteredWagers.push(w)
+            });
     }
 
-    public get tournament(): Tournament {
-        return this.match.tournament;
+    public get tournamentName(): string {
+        return this.match.tournamentName;
     }
 
-    public get category(): Category {
+    public get category(): Enums.Category {
         return this.match.category;
     }
 
-    public get team1(): Team {
-        return this.match.team1;
+    public get teamLeft(): Team {
+        return this.match.teamLeft;
     }
 
-    public get team2(): Team {
-        return this.match.team2;
+    public get teamRight(): Team {
+        return this.match.teamRight;
     }
 
     public get matchLink(): string {
         return this.match.matchLink;
     }
 
+    public get matchFormat(): string {
+        return Enums.MatchFormat[this.match.matchFormat].toUpperCase();
+    }
+
     /**
      * Time to start in milliseconds
      */
     public get startsIn(): number {
-        return this.match.date.getTime() - new Date().getTime();
+        return this.match.startDate.getTime() - new Date().getTime();
     }
 
     /**
@@ -70,7 +71,7 @@ export default class MatchViewModel {
 
     public get isLive(): boolean {
         const current = new Date().getTime();
-        const match = this.match.date.getTime();
+        const match = this.match.startDate.getTime();
 
         return match < current;
     }
@@ -91,8 +92,8 @@ export default class MatchViewModel {
             return;
         }
 
-        const hours = ("0" + this.match.date.getHours()).slice(-2);
-        const minutes = ("0" + this.match.date.getMinutes()).slice(-2);
+        const hours = ("0" + this.match.startDate.getHours()).slice(-2);
+        const minutes = ("0" + this.match.startDate.getMinutes()).slice(-2);
 
         this.formattedDate(hours + ":" + minutes);
     }

@@ -46,19 +46,6 @@ namespace PlayTheOdds.VPGame
             return GetMatchesAsync("open");
         }
 
-        private Task<List<Match>> GetMatchesAsync(string status)
-        {
-            var uriBuilder = new UriBuilder
-            {
-                Scheme = Scheme,
-                Host = Host,
-                Path = "gateway/v1/match",
-                Query = $"category=&status={status}&limit=100&page=1"
-            };
-
-            return GetList<Match>(uriBuilder);
-        }
-
         public Task<List<Wager>> GetWagersAsync(string scheduleId)
         {
             var uriBuilder = new UriBuilder
@@ -88,6 +75,19 @@ namespace PlayTheOdds.VPGame
                 _logger.LogError(-1, e, string.Empty);
                 return new List<T>();
             }
+        }
+
+        private Task<List<Match>> GetMatchesAsync(string status)
+        {
+            var uriBuilder = new UriBuilder
+            {
+                Scheme = Scheme,
+                Host = Host,
+                Path = "gateway/v1/match",
+                Query = $"category=&status={status}&limit=100&page=1"
+            };
+
+            return GetList<Match>(uriBuilder);
         }
     }
 }

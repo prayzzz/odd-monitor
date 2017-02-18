@@ -1,30 +1,31 @@
 ﻿import * as ko from "knockout";
 
-import { VpGame } from "../odds/vpGame"
-import Ajax from "../shared/ajax"
+import * as Enums from "../models/enums"
+import { Loader as VpGame } from "../api/vpGame";
 import Timespan from "../shared/timespan"
-import * as Enums from "../enums/enums"
 import MatchViewModel from "../viewModels/matchViewModel";
 
 interface ICategoryFilter { [c: string]: boolean }
 
 export default class MainViewModel {
-    private readonly vpGame = new VpGame();
     private readonly matches: KnockoutObservableArray<MatchViewModel>;
     private readonly filteredMatches: KnockoutObservableArray<MatchViewModel>;
     private readonly time: KnockoutObservable<string>;
+    private readonly lastRefreshAgo: KnockoutObservable<string>;
     private readonly filter: ICategoryFilter;
+    private lastRefresh: Date;
 
     constructor() {
         this.matches = ko.observableArray<MatchViewModel>();
         this.filteredMatches = ko.observableArray<MatchViewModel>();
         this.time = ko.observable<string>();
+        this.lastRefreshAgo = ko.observable<string>();
+        this.lastRefresh = new Date();
         this.filter = {};
 
         this.initFilter();
 
         this.startClock();
-        this.startHeartbeat();
         this.startMatchLoading();
     }
 
@@ -52,7 +53,7 @@ export default class MainViewModel {
     }
 
     private loadMatches(): void {
-        this.vpGame.getMatchesAsync().then(matches => {
+        VpGame.getMatchesAsync().then(matches => {
             // clear current
             this.matches().forEach(m => m.dispose());
             this.matches.removeAll();
@@ -62,6 +63,7 @@ export default class MainViewModel {
 
             // apply filter
             this.filterChanged(this);
+            this.lastRefresh = new Date();
         });
     }
 
@@ -89,16 +91,16 @@ export default class MainViewModel {
 
         setInterval(() => {
             this.loadMatches();
-        }, Timespan.fromMinutes(2));
+        }, Timespan.fromSeconds(30));
     }
 
-    private startHeartbeat(): void {
-        Ajax.get("/api/v1/heartbeat").send();
+    // private startHeartbeat(): void {
+    //     Ajax.get("/api/v1/heartbeat").send();
 
-        setInterval(() => {
-            Ajax.get("/api/v1/heartbeat").send();
-        }, Timespan.fromMinutes(1));
-    }
+    //     setInterval(() => {
+    //         Ajax.get("/api/v1/heartbeat").send();
+    //     }, Timespan.fromMinutes(1));
+    // }
 
     private startClock(): void {
         setInterval(() => {
@@ -108,6 +110,11 @@ export default class MainViewModel {
             const seconds = ("0" + date.getSeconds()).slice(-2);
 
             this.time(hours + ":" + minutes + ":" + seconds);
+
+            const refreshAgo = new Date().getTime() - this.lastRefresh.getTime();
+            const refreshMinutes = Math.floor(refreshAgo / 60000);
+            const refreshSeconds = ("0" + Math.floor((refreshAgo - (refreshMinutes * 60000)) / 1000)).slice(-2);
+            this.lastRefreshAgo(`${refreshMinutes}:${refreshSeconds}`);
         }, Timespan.fromSeconds(1));
     }
 }

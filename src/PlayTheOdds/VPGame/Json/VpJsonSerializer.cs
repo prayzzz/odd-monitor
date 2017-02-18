@@ -2,7 +2,7 @@
 
 namespace PlayTheOdds.VPGame.Json
 {
-    public sealed class VpJsonSerializer :  JsonSerializer
+    public sealed class VpJsonSerializer : JsonSerializer
     {
         private static VpJsonSerializer _instance;
 

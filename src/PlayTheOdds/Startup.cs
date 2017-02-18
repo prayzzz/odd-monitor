@@ -4,18 +4,35 @@ using Autofac.Extensions.DependencyInjection;
 using Easy.MessageHub;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PlayTheOdds.Common.Extensions;
+using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace PlayTheOdds
 {
     public class Startup
     {
+        public Startup(IHostingEnvironment env)
+        {
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", true, true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName.ToLower()}.json", true)
+                .Build();
+
+            Log.Logger = new LoggerConfiguration().ReadFrom
+                .Configuration(Configuration)
+                .CreateLogger();
+        }
+
+        public IConfigurationRoot Configuration { get; }
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole();
+            loggerFactory.AddSerilog();
 
             if (env.IsDevelopment())
             {

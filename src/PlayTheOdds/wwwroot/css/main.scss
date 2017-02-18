@@ -44,6 +44,10 @@ a {
       align-items: center;
    }
 
+   &.h-centered {
+      justify-content: center;
+   }
+
    &.right {
       justify-content: flex-end;
    }
@@ -68,5 +72,13 @@ a {
 }
 
 .filter {
-    margin: 1em;
+   margin: 1em;
+}
+
+.text-right {
+   text-align: right;
+}
+
+.text-center {
+   text-align: center;
 }

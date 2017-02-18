@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 using Easy.MessageHub;
 using Microsoft.Extensions.Logging;
 using prayzzz.Common.Attributes;
 using prayzzz.Common.Enums;
 using PlayTheOdds.Common;
-using PlayTheOdds.Heartbeat;
 using PlayTheOdds.Models;
 
 namespace PlayTheOdds.VPGame.Matches
@@ -19,13 +20,15 @@ namespace PlayTheOdds.VPGame.Matches
     [Inject(DependencyLifetime.Singleton, AutoActivate = true)]
     public class MatchLoader : IMatchLoader, IDisposable
     {
-        private static readonly TimeSpan FullLoadTimeout = TimeSpan.FromMinutes(10);
+        private static readonly TimeSpan FullLoadTimeout = TimeSpan.FromMinutes(5);
+        private static readonly TimeSpan RefreshTimeout = TimeSpan.FromMinutes(1);
 
         private readonly IVpGameApi _api;
-        private readonly IMessageHub _messageHub;
         private readonly Timer _fullLoadTimer;
+        private readonly Timer _refreshWagersTimer;
         private readonly ILogger<MatchLoader> _logger;
         private readonly object _matchDataLock;
+        private readonly IMessageHub _messageHub;
 
         private List<Match> _matchData;
 
@@ -39,6 +42,13 @@ namespace PlayTheOdds.VPGame.Matches
             _matchData = new List<Match>();
 
             _fullLoadTimer = new Timer(LoadMatches, null, TimeSpan.Zero, FullLoadTimeout);
+            _refreshWagersTimer = new Timer(RefreshWagers, null, TimeSpan.Zero, RefreshTimeout);
+        }
+
+        public void Dispose()
+        {
+            _fullLoadTimer.Dispose();
+            _refreshWagersTimer.Dispose();
         }
 
         public List<Match> GetMatches()
@@ -47,6 +57,39 @@ namespace PlayTheOdds.VPGame.Matches
             {
                 return _matchData;
             }
+        }
+
+        private async void RefreshWagers(object state)
+        {
+            var watch = BetterStopWatch.Start();
+
+            var matches = new List<Match>(_matchData);
+
+            var now = DateTime.Now;
+            var startingMatches = matches.Where(x => x.StartDate > now && x.StartDate - now < TimeSpan.FromMinutes(15)).ToList();
+
+            if (startingMatches.Count == 0)
+            {
+                return;
+            }
+
+            var updatedWagers = new Dictionary<Match, List<Wager>>();
+            foreach (var match in startingMatches)
+            {
+                updatedWagers.Add(match, await _api.GetWagersAsync(match.AdditionalData["scheduleId"]));
+            }
+
+            lock (_matchDataLock)
+            {
+                foreach (var pair in updatedWagers)
+                {
+                    pair.Key.Wagers.Clear();
+                    pair.Key.Wagers.AddRange(pair.Value);
+                }
+            }
+
+            watch.Stop();
+            _logger.LogInformation($"{updatedWagers.Count} matches updated in {watch.ElapsedMilliseconds}ms");
         }
 
         private async void LoadMatches(object state)
@@ -70,7 +113,7 @@ namespace PlayTheOdds.VPGame.Matches
             }
 
             watch.Stop();
-            _logger.LogInformation($"wagers loaded in {watch.ElapsedMilliseconds}ms");
+            _logger.LogInformation($"{matches.Sum(m => m.Wagers.Count)} wagers loaded in {watch.ElapsedMilliseconds}ms");
 
             if (matches.Count != 0)
             {
@@ -81,11 +124,6 @@ namespace PlayTheOdds.VPGame.Matches
 
                 _messageHub.Publish(new MatchesLoadedEvent(_matchData));
             }
-        }
-
-        public void Dispose()
-        {
-            _fullLoadTimer.Dispose();
         }
     }
 }

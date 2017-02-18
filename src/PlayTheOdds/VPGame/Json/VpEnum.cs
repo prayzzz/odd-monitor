@@ -7,7 +7,7 @@ namespace PlayTheOdds.VPGame.Json
     {
         public static Category GetCategory(string value)
         {
-            switch (value)
+            switch (value.ToLower())
             {
                 case "":
                     return Category.None;
@@ -46,6 +46,40 @@ namespace PlayTheOdds.VPGame.Json
                     return MatchFormat.Bo9;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MatchFormat");
+            }
+        }
+
+        public static WagerStatus GetWagerStatus(string value)
+        {
+            switch (value.ToLower())
+            {
+                case "":
+                    return WagerStatus.None;
+                case "live":
+                    return WagerStatus.Live;
+                case "settled":
+                    return WagerStatus.Settled;
+                case "canceled":
+                    return WagerStatus.Canceled;
+                default:
+                {
+                    if (value.Contains("later"))
+                    {
+                        return WagerStatus.Open;
+                    }
+
+                    if (value.Contains("settling"))
+                    {
+                        return WagerStatus.Settled;
+                    }
+
+                    if (value.Contains("canceling"))
+                    {
+                        return WagerStatus.Canceled;
+                    }
+
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WagerStatus");
+                }
             }
         }
     }
