@@ -24,7 +24,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="1.0.0-rc1" />
   </ItemGroup>
   <Target Name="Prepublish" BeforeTargets="Publish">
-    <Exec Command="yarn" WorkingDirectory="wwwroot" />
-    <Exec Command="node_modules/.bin/webpack.cmd" WorkingDirectory="wwwroot" />
+    <Exec Command="yarn" WorkingDirectory="wwwroot"  />
+    <Exec Command="$(MSBuildThisFileDirectory)wwwroot/node_modules/.bin/webpack.cmd" WorkingDirectory="wwwroot" />
   </Target>
 </Project>
