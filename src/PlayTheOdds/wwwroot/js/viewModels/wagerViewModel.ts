@@ -1,5 +1,6 @@
 import * as ko from "knockout";
 
+import Timespan from "../shared/timespan"
 import * as Enums from "../models/enums";
 import { Team, Wager } from "../models/models"
 
@@ -71,6 +72,13 @@ export default class WagerViewModel {
 
     public get hasRightHandicap(): boolean {
         return this.wager.additionalData["handicapTeam"] === "right";
+    }
+
+    public get startsIn(): number {
+        return this.wager.startDate.getTime() - new Date().getTime();
+    }
+    public get isStartingSoon(): boolean {
+        return this.startsIn < Timespan.fromMinutes(30);
     }
 
     public get isLive(): boolean {

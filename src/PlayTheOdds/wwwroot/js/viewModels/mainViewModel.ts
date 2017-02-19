@@ -10,18 +10,21 @@ interface ICategoryFilter { [c: string]: boolean }
 export default class MainViewModel {
     private readonly matches: KnockoutObservableArray<MatchViewModel>;
     private readonly filteredMatches: KnockoutObservableArray<MatchViewModel>;
-    private readonly time: KnockoutObservable<string>;
-    private readonly lastRefreshAgo: KnockoutObservable<string>;
+    private readonly clock: KnockoutObservable<string>;
+    private readonly timeSinceLastUpdate: KnockoutObservable<string>;
     private readonly filter: ICategoryFilter;
     private lastRefresh: Date;
 
     constructor() {
         this.matches = ko.observableArray<MatchViewModel>();
         this.filteredMatches = ko.observableArray<MatchViewModel>();
-        this.time = ko.observable<string>();
-        this.lastRefreshAgo = ko.observable<string>();
+        this.clock = ko.observable<string>();
+        this.timeSinceLastUpdate = ko.observable<string>();
         this.lastRefresh = new Date();
         this.filter = {};
+
+        this.refreshClock();
+        this.refreshTimeSinceLastUpdate();
 
         this.initFilter();
 
@@ -29,7 +32,7 @@ export default class MainViewModel {
         this.startMatchLoading();
     }
 
-    public filterChanged(parent: MainViewModel) {
+    public applyCategoryFilter(parent: MainViewModel) {
         localStorage.setItem("filter", JSON.stringify(parent.filter));
 
         let filteredMatches = new Array<MatchViewModel>();
@@ -58,15 +61,10 @@ export default class MainViewModel {
 
     private loadMatches(): void {
         VpGame.getMatchesAsync().then(matches => {
-            // clear current
-            this.matches().forEach(m => m.dispose());
-            this.matches.removeAll();
+            this.matches(matches.map(m => new MatchViewModel(m)))
 
-            // push new
-            matches.forEach(m => this.matches.push(new MatchViewModel(m)));
+            this.applyCategoryFilter(this);
 
-            // apply filter
-            this.filterChanged(this);
             this.lastRefresh = new Date();
         });
     }
@@ -98,27 +96,35 @@ export default class MainViewModel {
         }, Timespan.fromSeconds(30));
     }
 
-    // private startHeartbeat(): void {
-    //     Ajax.get("/api/v1/heartbeat").send();
-
-    //     setInterval(() => {
-    //         Ajax.get("/api/v1/heartbeat").send();
-    //     }, Timespan.fromMinutes(1));
-    // }
-
     private startClock(): void {
         setInterval(() => {
-            const date = new Date();
-            const hours = ("0" + date.getHours()).slice(-2);
-            const minutes = ("0" + date.getMinutes()).slice(-2);
-            const seconds = ("0" + date.getSeconds()).slice(-2);
+            this.refreshClock();
+            this.refreshTimeSinceLastUpdate();
+            this.refreshMatchStartDate();
 
-            this.time(hours + ":" + minutes + ":" + seconds);
-
-            const refreshAgo = new Date().getTime() - this.lastRefresh.getTime();
-            const refreshMinutes = Math.floor(refreshAgo / 60000);
-            const refreshSeconds = ("0" + Math.floor((refreshAgo - (refreshMinutes * 60000)) / 1000)).slice(-2);
-            this.lastRefreshAgo(`${refreshMinutes}:${refreshSeconds}`);
         }, Timespan.fromSeconds(1));
+    }
+
+    private refreshClock() {
+        const date = new Date();
+        const hours = ("0" + date.getHours()).slice(-2);
+        const minutes = ("0" + date.getMinutes()).slice(-2);
+        const seconds = ("0" + date.getSeconds()).slice(-2);
+
+        this.clock(hours + ":" + minutes + ":" + seconds);
+    }
+
+    private refreshTimeSinceLastUpdate() {
+        const refreshAgo = new Date().getTime() - this.lastRefresh.getTime();
+        const refreshMinutes = Math.floor(refreshAgo / 60000);
+        const refreshSeconds = ("0" + Math.floor((refreshAgo - (refreshMinutes * 60000)) / 1000)).slice(-2);
+
+        this.timeSinceLastUpdate(`${refreshMinutes}:${refreshSeconds}`);
+    }
+
+    private refreshMatchStartDate() {
+        this.matches().forEach(m => {
+            m.refreshStartDateFormatted();
+        });
     }
 }

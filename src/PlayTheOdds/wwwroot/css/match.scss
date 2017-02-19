@@ -32,6 +32,14 @@
          background: #2e3238;
       }
 
+      &.highlight:nth-child(even) {
+         background: #38352e;
+      }
+
+      &.highlight {
+         background: #2b2823;
+      }
+
       .name {
          width: 20em;
       }

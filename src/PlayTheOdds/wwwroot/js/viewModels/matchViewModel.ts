@@ -6,9 +6,9 @@ import Timespan from "../shared/timespan"
 import WagerViewModel from "./wagerViewModel"
 
 export default class MatchViewModel {
-    private countdownHandle: number;
     private nextWagerStart: Date;
-    public readonly formattedDate: KnockoutObservable<string>;
+
+    public readonly startDateFormatted: KnockoutObservable<string>;
     public readonly match: Match;
     public readonly wagers: WagerViewModel[];
     public readonly filteredWagers: KnockoutObservableArray<WagerViewModel>;
@@ -18,7 +18,7 @@ export default class MatchViewModel {
         this.wagers = match.wagers.map(m => new WagerViewModel(m, match.teamLeft, match.teamRight));
 
         this.filteredWagers = ko.observableArray<WagerViewModel>();
-        this.formattedDate = ko.observable<string>();
+        this.startDateFormatted = ko.observable<string>();
 
         this.wagers
             .filter(w => w.wager.status === Enums.WagerStatus.Open || w.wager.status === Enums.WagerStatus.Live)
@@ -27,7 +27,7 @@ export default class MatchViewModel {
             });
 
         this.nextWagerStart = this.getClosestWagerStartDate();
-        this.initFormattedDate();
+        this.refreshStartDateFormatted();
     }
 
     public get tournamentName(): string {
@@ -54,20 +54,11 @@ export default class MatchViewModel {
         return Enums.MatchFormat[this.match.matchFormat].toUpperCase();
     }
 
-    public getClosestWagerStartDate(): Date {
-        if (this.wagers.length == 0) {
-            return this.match.startDate;
-        }
+    public get isLive(): boolean {
+        const current = new Date().getTime();
+        const match = this.nextWagerStart.getTime();
 
-        let now = new Date();
-        let date = this.wagers[this.wagers.length - 1].wager.startDate;
-        this.filteredWagers().forEach(w => {
-            if (w.wager.startDate > now && w.wager.startDate < date) {
-                date = w.wager.startDate;
-            }
-        })
-
-        return date;
+        return match < current;
     }
 
     /**
@@ -87,37 +78,41 @@ export default class MatchViewModel {
         return `in ${minutes}:${seconds}`;
     }
 
-    public get isLive(): boolean {
-        const current = new Date().getTime();
-        const match = this.nextWagerStart.getTime();
-
-        return match < current;
-    }
-
-    public dispose(): void {
-        clearInterval(this.countdownHandle);
-    }
-
-    private initFormattedDate() {
+    public refreshStartDateFormatted() {
         if (this.isLive) {
-            this.formattedDate("Live");
+            this.startDateFormatted("Live");
             return;
         }
 
-        // Show countdown, if starts in under 30Minutes
-        if (this.startsIn < Timespan.fromMinutes(30)) {
-            this.startCountdown();
+        if (this.startsIn > Timespan.fromMinutes(30)) {
+            // set absolute time        
+            const hours = ("0" + this.match.startDate.getHours()).slice(-2);
+            const minutes = ("0" + this.match.startDate.getMinutes()).slice(-2);
+            this.startDateFormatted(hours + ":" + minutes);
             return;
         }
 
-        const hours = ("0" + this.match.startDate.getHours()).slice(-2);
-        const minutes = ("0" + this.match.startDate.getMinutes()).slice(-2);
+        // set relative time            
+        const minutes = Math.floor(this.startsIn / 60000);
+        const seconds = ("0" + Math.floor((this.startsIn - (minutes * 60000)) / 1000)).slice(-2);
 
-        this.formattedDate(hours + ":" + minutes);
+        this.startDateFormatted(`in ${minutes}:${seconds}`);
+        return;
     }
 
-    private startCountdown(): void {
-        this.formattedDate(this.startsInFormatted);
-        this.countdownHandle = setInterval(() => this.formattedDate(this.startsInFormatted), 1000);
+    private getClosestWagerStartDate(): Date {
+        if (this.wagers.length == 0) {
+            return this.match.startDate;
+        }
+
+        let now = new Date();
+        let date = this.wagers[this.wagers.length - 1].wager.startDate;
+        this.filteredWagers().forEach(w => {
+            if (w.wager.startDate > now && w.wager.startDate < date) {
+                date = w.wager.startDate;
+            }
+        })
+
+        return date;
     }
 }
