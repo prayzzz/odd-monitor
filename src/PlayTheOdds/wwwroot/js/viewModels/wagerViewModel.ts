@@ -31,6 +31,10 @@ export default class WagerViewModel {
         return this.wager.name;
     }
 
+    public get wagerLink(): string {
+        return this.wager.wagerLink;
+    }
+
     public get status(): string {
         return Enums.WagerStatus[this.wager.status];
     }
@@ -78,17 +82,22 @@ export default class WagerViewModel {
         return this.wager.startDate.getTime() - new Date().getTime();
     }
     public get isStartingSoon(): boolean {
-        return this.startsIn < Timespan.fromMinutes(30);
+        return !this.isLive && this.startsIn < Timespan.fromMinutes(30);
     }
 
     public get isLive(): boolean {
         const current = new Date().getTime();
-        const match = this.wager.startDate.getTime();
+        const wager = this.wager.startDate.getTime();
 
-        return match < current;
+        return wager < current;
     }
 
     private initFormattedDate() {
+        if (this.isLive) {
+            this.formattedStatus("Live");
+            return;
+        }
+
         if (this.wager.status === Enums.WagerStatus.Open) {
             const hours = ("0" + this.wager.startDate.getHours()).slice(-2);
             const minutes = ("0" + this.wager.startDate.getMinutes()).slice(-2);

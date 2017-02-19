@@ -27,7 +27,8 @@ export class Wager {
     id: number;
     name: string;
     oddLeft: number;
-    oddRight: number;    
+    oddRight: number;
     startDate: Date;
     status: Enums.WagerStatus;
+    wagerLink: string;
 }

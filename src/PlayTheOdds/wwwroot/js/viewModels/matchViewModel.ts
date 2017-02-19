@@ -86,8 +86,8 @@ export default class MatchViewModel {
 
         if (this.startsIn > Timespan.fromMinutes(30)) {
             // set absolute time        
-            const hours = ("0" + this.match.startDate.getHours()).slice(-2);
-            const minutes = ("0" + this.match.startDate.getMinutes()).slice(-2);
+            const hours = ("0" + this.nextWagerStart.getHours()).slice(-2);
+            const minutes = ("0" + this.nextWagerStart.getMinutes()).slice(-2);
             this.startDateFormatted(hours + ":" + minutes);
             return;
         }

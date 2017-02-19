@@ -51,6 +51,7 @@ export class Loader {
         wager.oddRight = w.oddRight;        
         wager.startDate = new Date(w.startDate);        
         wager.status = w.status;
+        wager.wagerLink = this.getMatchUrl(w.id);
 
         return wager;
     }

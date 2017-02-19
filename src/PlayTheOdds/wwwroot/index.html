@@ -50,7 +50,7 @@
         <!-- ko foreach: filteredMatches -->
 
         <div class="match">
-            <a class="head flex-row v-centered" href="#" data-bind="attr: {href: matchLink }" target="_blank">
+            <div class="head flex-row v-centered">
                 <div class="flex-row spaced">
                     <img data-bind="attr: { src: $root.getImagePath(category) }" width="24" height="24" />
                     <div style="font-size: 1.1em; text-align: center; width: 4em;"><span data-bind="text: startDateFormatted"></span></div>
@@ -63,12 +63,12 @@
                 <div class="flex-row right spaced">
                     <div><span data-bind="text: tournamentName"></span></div>
                 </div>
-            </a>
+            </div>
             <div class="body">
 
                 <!-- ko foreach: filteredWagers -->
 
-                <div class="wager" data-bind="css: { highlight: isStartingSoon == true }">
+                <a  href="#" class="wager" data-bind="css: { highlight: isStartingSoon == true }, attr: { href: wagerLink }" target="_blank">
                     <div class="name">
                         <span data-bind="text: nameWithHandicap"></span>
                     </div>
@@ -83,7 +83,7 @@
                     <div class="flex-row strechted right">
                         <span data-bind="text: formattedStatus"></span>
                     </div>
-                </div>
+                </a>
 
                 <!-- /ko -->
 

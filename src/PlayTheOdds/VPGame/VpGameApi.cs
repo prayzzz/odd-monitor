@@ -70,6 +70,11 @@ namespace PlayTheOdds.VPGame
                     return _jsonSerializer.Deserialize<Envelope<T>>(stream).Body;
                 }
             }
+            catch (WebException)
+            {
+                _logger.LogError("VpGame not available");                
+                return new List<T>();                
+            }
             catch (Exception e)
             {
                 _logger.LogError(-1, e, string.Empty);
