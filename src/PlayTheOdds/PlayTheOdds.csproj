@@ -25,6 +25,6 @@
   </ItemGroup>
   <Target Name="Prepublish" BeforeTargets="Publish">
     <Exec Command="yarn" WorkingDirectory="wwwroot"  />
-    <Exec Command="$(MSBuildThisFileDirectory)wwwroot/node_modules/.bin/webpack.cmd" WorkingDirectory="wwwroot" />
+    <Exec Command="node_modules/.bin/webpack" WorkingDirectory="wwwroot" />
   </Target>
 </Project>
