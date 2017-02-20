@@ -39,7 +39,8 @@
 
         <!-- ko foreach: {data: Object.keys(filter), as: '_propkey'} -->
 
-        <input type="checkbox" data-bind="checked: $parent.filter[_propkey], click: $parent.applyCategoryFilter($parent)">        <span data-bind="text: _propkey"></span>
+        <input type="checkbox" data-bind="checked: $parent.filter[_propkey], attr: { id: _propkey, name: _propkey }">
+        <label data-bind="attr: { for: _propkey }"><span data-bind="text: _propkey"></span></label>
 
         <!-- /ko -->
 
@@ -68,7 +69,7 @@
 
                 <!-- ko foreach: filteredWagers -->
 
-                <a  href="#" class="wager" data-bind="css: { highlight: isStartingSoon == true }, attr: { href: wagerLink }" target="_blank">
+                <a href="#" class="wager" data-bind="css: { highlight: isStartingSoon == true }, attr: { href: wagerLink }" target="_blank">
                     <div class="name">
                         <span data-bind="text: nameWithHandicap"></span>
                     </div>

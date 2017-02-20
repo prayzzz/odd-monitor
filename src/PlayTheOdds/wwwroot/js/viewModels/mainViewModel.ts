@@ -5,7 +5,7 @@ import { Loader as VpGame } from "../api/vpGame";
 import Timespan from "../shared/timespan"
 import MatchViewModel from "../viewModels/matchViewModel";
 
-interface ICategoryFilter { [c: string]: boolean }
+interface ICategoryFilter { [c: string]: KnockoutObservable<boolean> }
 
 export default class MainViewModel {
     private readonly matches: KnockoutObservableArray<MatchViewModel>;
@@ -32,26 +32,25 @@ export default class MainViewModel {
         this.startMatchLoading();
     }
 
-    public applyCategoryFilter(parent: MainViewModel) {
-        localStorage.setItem("filter", JSON.stringify(parent.filter));
+    public applyCategoryFilter() {
+        localStorage.setItem("filter", JSON.stringify(this.toPlainObject(this.filter)));
 
         let filteredMatches = new Array<MatchViewModel>();
 
-        parent.filteredMatches.removeAll();
-        parent.matches().forEach(m => {
-
+        this.filteredMatches.removeAll();
+        this.matches().forEach(m => {
             // dont show matches which started over 5Minutes ago
             if (m.startsIn < -Timespan.fromMinutes(5)) {
                 return;
             }
 
             // filter by category
-            if (parent.filter[Enums.Category[m.category]]) {
+            if (this.filter[Enums.Category[m.category]]()) {
                 filteredMatches.push(m);
             }
         });
 
-        parent.filteredMatches(filteredMatches.sort((a, b) => a.startsIn - b.startsIn));
+        this.filteredMatches(filteredMatches.sort((a, b) => a.startsIn - b.startsIn));
     }
 
     public getImagePath(category: Enums.Category): string {
@@ -63,18 +62,18 @@ export default class MainViewModel {
         VpGame.getMatchesAsync().then(matches => {
             this.matches(matches.map(m => new MatchViewModel(m)))
 
-            this.applyCategoryFilter(this);
+            this.applyCategoryFilter();
 
             this.lastRefresh = new Date();
         });
     }
 
     private initFilter(): void {
-        this.filter[Enums.Category[Enums.Category.Basketball]] = true;
-        this.filter[Enums.Category[Enums.Category.Csgo]] = true;
-        this.filter[Enums.Category[Enums.Category.Dota2]] = true;
-        this.filter[Enums.Category[Enums.Category.Soccer]] = true;
-        this.filter[Enums.Category[Enums.Category.Tennis]] = true;
+        this.filter[Enums.Category[Enums.Category.Basketball]] = ko.observable(true);
+        this.filter[Enums.Category[Enums.Category.Csgo]] = ko.observable(true);
+        this.filter[Enums.Category[Enums.Category.Dota2]] = ko.observable(true);
+        this.filter[Enums.Category[Enums.Category.Soccer]] = ko.observable(true);
+        this.filter[Enums.Category[Enums.Category.Tennis]] = ko.observable(true);
 
         const storedFilterStr = localStorage.getItem("filter");
         if (storedFilterStr) {
@@ -82,8 +81,14 @@ export default class MainViewModel {
 
             for (let s in storedFilter) {
                 if (this.filter.hasOwnProperty(s)) {
-                    this.filter[s] = storedFilter[s];
+                    this.filter[s](storedFilter[s]);
                 }
+            }
+        }
+
+        for (let key in this.filter) {
+            if (this.filter.hasOwnProperty(key)) {
+                this.filter[key].subscribe(() => this.applyCategoryFilter());
             }
         }
     }
@@ -105,7 +110,7 @@ export default class MainViewModel {
         }, Timespan.fromSeconds(1));
     }
 
-    private refreshClock() {
+    private refreshClock(): void {
         const date = new Date();
         const hours = ("0" + date.getHours()).slice(-2);
         const minutes = ("0" + date.getMinutes()).slice(-2);
@@ -114,7 +119,7 @@ export default class MainViewModel {
         this.clock(hours + ":" + minutes + ":" + seconds);
     }
 
-    private refreshTimeSinceLastUpdate() {
+    private refreshTimeSinceLastUpdate(): void {
         const refreshAgo = new Date().getTime() - this.lastRefresh.getTime();
         const refreshMinutes = Math.floor(refreshAgo / 60000);
         const refreshSeconds = ("0" + Math.floor((refreshAgo - (refreshMinutes * 60000)) / 1000)).slice(-2);
@@ -122,9 +127,20 @@ export default class MainViewModel {
         this.timeSinceLastUpdate(`${refreshMinutes}:${refreshSeconds}`);
     }
 
-    private refreshMatchStartDate() {
+    private refreshMatchStartDate(): void {
         this.matches().forEach(m => {
             m.refreshStartDateFormatted();
         });
+    }
+
+    private toPlainObject(filter: ICategoryFilter): any {
+        let obj: any = {};
+        for (let key in this.filter) {
+            if (this.filter.hasOwnProperty(key)) {
+                obj[key] = this.filter[key]();
+            }
+        }
+
+        return obj;
     }
 }

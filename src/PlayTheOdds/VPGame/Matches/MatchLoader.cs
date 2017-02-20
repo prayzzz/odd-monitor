@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using Microsoft.Extensions.Logging;
 using prayzzz.Common.Attributes;
@@ -71,15 +70,19 @@ namespace PlayTheOdds.VPGame.Matches
                 return;
             }
 
-            var updatedWagers = new Dictionary<Match, List<Wager>>();
+            var matchToWagers = new Dictionary<Match, List<Wager>>();
             foreach (var match in startingMatches)
             {
-                updatedWagers.Add(match, await _api.GetWagersAsync(match.AdditionalData["scheduleId"]));
+                var loadedWagers = await _api.GetWagersAsync(match.AdditionalData["scheduleId"]);
+                if (loadedWagers.Count > 0)
+                {
+                    matchToWagers.Add(match, loadedWagers);
+                }
             }
 
             lock (_matchDataLock)
             {
-                foreach (var pair in updatedWagers)
+                foreach (var pair in matchToWagers)
                 {
                     pair.Key.Wagers.Clear();
                     pair.Key.Wagers.AddRange(pair.Value);
@@ -87,7 +90,7 @@ namespace PlayTheOdds.VPGame.Matches
             }
 
             watch.Stop();
-            _logger.LogInformation($"{updatedWagers.Count} matches updated in {watch.ElapsedMilliseconds}ms");
+            _logger.LogInformation($"{matchToWagers.Count} matches updated in {watch.ElapsedMilliseconds}ms");
         }
 
         private async void LoadMatches(object state)

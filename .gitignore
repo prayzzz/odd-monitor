@@ -245,3 +245,4 @@ ModelManifest.xml
 *.lock
 **/wwwroot/js/**/*.js
 **/wwwroot/dist/
+/src/logs
