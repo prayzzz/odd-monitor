@@ -33,17 +33,18 @@
         </div>
     </header>
 
-    <section class="filter">
+    <section class="filter-wrapper">
+        <div class="filter">
 
-        Filter:
+            Filter:
 
-        <!-- ko foreach: {data: Object.keys(filter), as: '_propkey'} -->
+            <!-- ko foreach: {data: Object.keys(filter), as: '_propkey'} -->
 
-        <input type="checkbox" data-bind="checked: $parent.filter[_propkey], attr: { id: _propkey, name: _propkey }">
-        <label data-bind="attr: { for: _propkey }"><span data-bind="text: _propkey"></span></label>
+            <input type="checkbox" data-bind="checked: $parent.filter[_propkey], attr: { id: _propkey, name: _propkey }">
+            <label data-bind="attr: { for: _propkey }"><span data-bind="text: _propkey"></span></label>
 
-        <!-- /ko -->
-
+            <!-- /ko -->
+        </div>
     </section>
 
     <section class="matches">

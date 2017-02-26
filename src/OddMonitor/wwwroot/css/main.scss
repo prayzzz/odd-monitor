@@ -10,16 +10,20 @@ html {
    font-weight: $font-weight;
    line-height: 1.5;
 }
+@media all and (max-width: 768px) {
+   html {
+      font-size: $font-size-small;
+   }
+}
 
 body,
 html {
    padding: 0;
    margin: 0;
 }
-@media all and (max-width: 768px) {
-   html {
-      font-size: $font-size-small;
-   }
+
+body {
+   padding-top: 3.5em;
 }
 
 div,
@@ -71,8 +75,15 @@ a {
    }
 }
 
-.filter {
-   margin: 1em;
+.filter-wrapper {
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+
+   .filter {
+      min-width: 900px;
+      width: calc(50% - 2em);
+   }
 }
 
 .text-right {

@@ -2,8 +2,11 @@
 
 header {
    background-color: lighten($color-background, 10%);
-   margin-bottom: 1em;
    padding: 0 1em;
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
 
    a {
       display: flex;

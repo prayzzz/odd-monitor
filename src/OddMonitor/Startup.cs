@@ -38,7 +38,7 @@ namespace OddMonitor
                 app.UseDeveloperExceptionPage();
 
                 app.UseSwagger();
-                app.UseSwaggerUi(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "PlayTheOdds API"); });
+                app.UseSwaggerUi(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "OddMonitor API"); });
             }
 
             app.UseDefaultFiles();
@@ -49,7 +49,7 @@ namespace OddMonitor
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "PlayTheOdds API", Version = "v1"}); });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "OddMonitor API", Version = "v1"}); });
             services.AddMvc();
 
             var builder = new ContainerBuilder();
