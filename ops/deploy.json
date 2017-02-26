@@ -1,6 +1,6 @@
 {
     "appName": "odd-monitor",
     "appProcess": "dotnet",
-    "startupFile": "PlayTheOdds.dll",
+    "startupFile": "OddMonitor.dll",
     "deployParentDirectoryPath": "./deploy"
 }
