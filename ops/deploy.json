@@ -2,5 +2,5 @@
     "appName": "odd-monitor",
     "appProcess": "dotnet",
     "startupFile": "OddMonitor.dll",
-    "deployParentDirectoryPath": "./deploy"
+    "deployParentDirectoryPath": "/opt/apps/live"
 }
