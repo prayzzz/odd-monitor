@@ -1,7 +1,7 @@
 ﻿using System;
-using PlayTheOdds.Models;
+using OddMonitor.Models;
 
-namespace PlayTheOdds.VPGame.Json
+namespace OddMonitor.VPGame.Json
 {
     public static class VpEnum
     {

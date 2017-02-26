@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using PlayTheOdds.Models;
+using OddMonitor.Models;
 
-namespace PlayTheOdds.VPGame.Matches
+namespace OddMonitor.VPGame.Matches
 {
     public class MatchesLoadedEvent
     {

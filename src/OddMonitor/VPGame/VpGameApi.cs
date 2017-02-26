@@ -5,11 +5,11 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using OddMonitor.Models;
+using OddMonitor.VPGame.Json;
 using prayzzz.Common.Attributes;
-using PlayTheOdds.Models;
-using PlayTheOdds.VPGame.Json;
 
-namespace PlayTheOdds.VPGame
+namespace OddMonitor.VPGame
 {
     public interface IVpGameApi
     {

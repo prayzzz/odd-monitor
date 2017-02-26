@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using PlayTheOdds.Models;
-using PlayTheOdds.VPGame;
-using PlayTheOdds.VPGame.Json;
+using OddMonitor.Models;
+using OddMonitor.VPGame;
+using OddMonitor.VPGame.Json;
 
-namespace PlayTheOdds.Test
+namespace OddMonitor.Test
 {
     [TestClass]
     public class VpContractResolverTest

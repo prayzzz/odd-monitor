@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
-namespace PlayTheOdds
+namespace OddMonitor
 {
     public class Program
     {

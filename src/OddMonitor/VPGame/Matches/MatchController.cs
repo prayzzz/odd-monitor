@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using PlayTheOdds.Models;
+using OddMonitor.Models;
 
-namespace PlayTheOdds.VPGame.Matches
+namespace OddMonitor.VPGame.Matches
 {
     [Route("api/v1/vpgame/match")]
     public class MatchController : Controller

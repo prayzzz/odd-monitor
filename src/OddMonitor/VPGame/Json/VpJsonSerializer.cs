@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace PlayTheOdds.VPGame.Json
+namespace OddMonitor.VPGame.Json
 {
     public sealed class VpJsonSerializer : JsonSerializer
     {

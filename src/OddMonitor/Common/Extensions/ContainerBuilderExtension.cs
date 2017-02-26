@@ -5,7 +5,7 @@ using Autofac;
 using prayzzz.Common.Attributes;
 using prayzzz.Common.Enums;
 
-namespace PlayTheOdds.Common.Extensions
+namespace OddMonitor.Common.Extensions
 {
     public static class ContainerBuilderExtension
     {

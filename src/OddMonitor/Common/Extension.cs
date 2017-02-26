@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace PlayTheOdds.Common
+namespace OddMonitor.Common
 {
     public static class Extension
     {

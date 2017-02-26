@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using PlayTheOdds.Common.Extensions;
+using OddMonitor.Common.Extensions;
 using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace PlayTheOdds
+namespace OddMonitor
 {
     public class Startup
     {

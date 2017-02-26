@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace PlayTheOdds.VPGame
+namespace OddMonitor.VPGame
 {
     public class Envelope<TBody>
     {

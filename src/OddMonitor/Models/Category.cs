@@ -1,4 +1,4 @@
-﻿namespace PlayTheOdds.Models
+﻿namespace OddMonitor.Models
 {
     public enum Category
     {

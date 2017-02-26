@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PlayTheOdds.Models
+namespace OddMonitor.Models
 {
     public class Match : IEquatable<Match>, IEqualityComparer<Match>
     {

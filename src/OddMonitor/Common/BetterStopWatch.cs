@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace PlayTheOdds.Common
+namespace OddMonitor.Common
 {
     public class BetterStopWatch : Stopwatch
     {

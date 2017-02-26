@@ -1,10 +1,10 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using PlayTheOdds.Common;
-using PlayTheOdds.Models;
+using OddMonitor.Common;
+using OddMonitor.Models;
 
-namespace PlayTheOdds.VPGame.Json
+namespace OddMonitor.VPGame.Json
 {
     public class WagerConverter : JsonConverter
     {

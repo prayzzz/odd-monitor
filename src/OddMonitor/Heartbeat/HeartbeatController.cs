@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace PlayTheOdds.Heartbeat
+namespace OddMonitor.Heartbeat
 {
     [Route("api/v1/heartbeat")]
     public class HeartbeatController : Controller

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PlayTheOdds.Common.Extensions
+namespace OddMonitor.Common.Extensions
 {
     public static class EnumerableExtension
     {

@@ -2,7 +2,7 @@
 using prayzzz.Common.Attributes;
 using prayzzz.Common.Enums;
 
-namespace PlayTheOdds.Heartbeat
+namespace OddMonitor.Heartbeat
 {
     public interface IHeartbeat
     {
