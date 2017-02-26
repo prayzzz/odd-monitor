@@ -13,6 +13,7 @@
     "node-sass": "^4.5.0",
     "ts-loader": "^2.0.0",
     "typescript": "^2.2.1",
+    "tslint": "^4.4.2",
     "webpack": "^2.2.1",
     "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "^2.0.0-rc.3",
