@@ -24,8 +24,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="1.0.0-rc1" />
   </ItemGroup>
   
-  <Target Name="Prepublish" BeforeTargets="PrepareForPublish">
-    <Exec Command="yarn" WorkingDirectory="wwwroot"  />
+  <Target Name="BundleFrontend" AfterTargets="PrepareForPublish">
+    <Exec Command="yarn" WorkingDirectory="wwwroot" />
     <Exec Command="node_modules/.bin/webpack" WorkingDirectory="wwwroot" />
 
     <ItemGroup>
