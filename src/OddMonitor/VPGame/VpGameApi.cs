@@ -64,6 +64,11 @@ namespace OddMonitor.VPGame
             try
             {
                 var webRequest = WebRequest.Create(uriBuilder.Uri);
+                webRequest.Headers["Accept"] = "application/json; application/javascript";
+                webRequest.Headers["Accept-Language"] = "en-US";                
+                webRequest.Headers["Cache-Control"] = "no-cache";
+                webRequest.Headers["User-Agent"] = "https://github.com/prayzzz/odd-monitor";                
+
                 var response = await webRequest.GetResponseAsync();
                 using (var stream = new JsonTextReader(new StreamReader(response.GetResponseStream())))
                 {
@@ -72,8 +77,8 @@ namespace OddMonitor.VPGame
             }
             catch (WebException)
             {
-                _logger.LogError("VpGame not available");                
-                return new List<T>();                
+                _logger.LogError("VpGame not available");
+                return new List<T>();
             }
             catch (Exception e)
             {
