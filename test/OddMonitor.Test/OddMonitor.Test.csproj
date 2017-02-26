@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\PlayTheOdds\PlayTheOdds.csproj" />
+    <ProjectReference Include="..\..\src\OddMonitor\OddMonitor.csproj" />
   </ItemGroup>
 
   <ItemGroup>

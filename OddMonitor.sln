@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26206.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayTheOdds", "src\PlayTheOdds\PlayTheOdds.csproj", "{5850B9F8-B80B-4F38-86AF-440F3932C7F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OddMonitor", "src\OddMonitor\OddMonitor.csproj", "{5850B9F8-B80B-4F38-86AF-440F3932C7F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayTheOdds.Test", "test\PlayTheOdds.Test\PlayTheOdds.Test.csproj", "{FA814B9C-41B7-4634-BE48-16168D6F1ECD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OddMonitor.Test", "test\OddMonitor.Test\OddMonitor.Test.csproj", "{FA814B9C-41B7-4634-BE48-16168D6F1ECD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
