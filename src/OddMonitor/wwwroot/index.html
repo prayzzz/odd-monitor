@@ -2,8 +2,9 @@
 <html>
 
 <head>
-    <title>Betting Monitor</title>
+    <title>odd-monitor</title>
     <link href="dist/bundle.css" type="text/css" rel="stylesheet" />
+    <link rel="shortcut icon" href="img/favicon.ico" />
 </head>
 
 <body>
@@ -53,17 +54,23 @@
 
         <div class="match">
             <div class="head flex-row v-centered">
-                <div class="flex-row spaced">
+                <div class="flex-row spaced name-col">
                     <img data-bind="attr: { src: $root.getImagePath(category) }" width="24" height="24" />
                     <div style="font-size: 1.1em; text-align: center; width: 4em;"><span data-bind="text: startDateFormatted"></span></div>
                 </div>
-                <div class="flex-row strechted h-centered" style="font-size: 1.1em;">
+                <div class="flex-row right v-centered team-col">
                     <div class="team-logo"><img data-bind="attr: { src: teamLeft.logoUrl }" height="24" /></div>
-                    <div><span data-bind="text: teamLeft.name"></span> vs. <span data-bind="text: teamRight.name"></span></div>
+                    <div><span data-bind="text: teamLeft.name"></span></div>
+                </div>
+                <div class="text-center" style="width: 2rem;">
+                    vs
+                </div>
+                <div class="flex-row v-centered team-col">
+                    <div><span data-bind="text: teamRight.name"></span></div>
                     <div class="team-logo"><img data-bind="attr: { src: teamRight.logoUrl }" height="24" /></div>
                 </div>
-                <div class="flex-row right spaced">
-                    <div><span data-bind="text: tournamentName"></span></div>
+                <div class="flex-row right strechted">
+                    <span data-bind="text: tournamentName"></span>
                 </div>
             </div>
             <div class="body">
@@ -71,16 +78,20 @@
                 <!-- ko foreach: filteredWagers -->
 
                 <a href="#" class="wager" data-bind="css: { highlight: isStartingSoon == true }, attr: { href: wagerLink }" target="_blank">
-                    <div class="name">
-                        <span data-bind="text: nameWithHandicap"></span>
+                    <div class="name-col">
+                        <span data-bind="text: name"></span>
                     </div>
 
-                    <div class="odd text-right">
+                    <div class="flex-row team-col right">
+                        <div class="handicap" data-bind="if: hasHandicap"><span data-bind="text: leftHandicap"></span></div>
                         <span data-bind="text: oddLeft"></span>
                     </div>
-                    <div> <span>:</span> </div>
-                    <div class="odd">
+                    <div class="text-center" style="width: 2em;">
+                        :
+                    </div>
+                    <div class="flex-row team-col">
                         <span data-bind="text: oddRight"></span>
+                        <div class="handicap" data-bind="if: hasHandicap"><span data-bind="text: rightHandicap"></span></div>
                     </div>
                     <div class="flex-row strechted right">
                         <span data-bind="text: formattedStatus"></span>
