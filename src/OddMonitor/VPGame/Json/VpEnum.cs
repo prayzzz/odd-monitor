@@ -51,7 +51,8 @@ namespace OddMonitor.VPGame.Json
 
         public static WagerStatus GetWagerStatus(string value)
         {
-            switch (value.ToLower())
+            value = value.ToLower();
+            switch (value)
             {
                 case "":
                     return WagerStatus.None;
