@@ -6,6 +6,9 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=5850B9F8_002DB80B_002D4F38_002D86AF_002D440F3932C7F2_002Fd_003AHeartbeat_002Ff_003AHeartbeat_002Ecs/@EntryIndexedValue"></s:String>
 	<s:Boolean x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=5850B9F8_002DB80B_002D4F38_002D86AF_002D440F3932C7F2_002Fd_003AHeartbeat_002Ff_003AHeartbeat_002Ecs/@EntryIndexRemoved">True</s:Boolean>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=5850B9F8_002DB80B_002D4F38_002D86AF_002D440F3932C7F2_002Fd_003Awwwroot_002Fd_003Anode_005Fmodules/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:Boolean x:Key="/Default/CodeInspection/Highlighting/IncludeWarningsInSwea/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=CssNotResolved/@EntryIndexedValue">DO_NOT_SHOW</s:String>
+	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=UnknownCssClass/@EntryIndexedValue">DO_NOT_SHOW</s:String>
 	
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=WrongPublicModifierSpecification/@EntryIndexedValue">WARNING</s:String>
 	<s:String x:Key="/Default/CodeInspection/JsInspections/LanguageLevel/@EntryValue">ECMAScript 2016</s:String>
@@ -236,6 +239,7 @@
     &lt;/Entry&gt;&#xD;
   &lt;/TypePattern&gt;&#xD;
 &lt;/Patterns&gt;</s:String>
+	<s:Boolean x:Key="/Default/Environment/ExcludedFiles/FileMasksThirdParty/=_002A_002A_005Cnode_005Fmodules_005C_002A_002A/@EntryIndexedValue">True</s:Boolean>
 	
 	<s:Boolean x:Key="/Default/Environment/ExcludedFiles/FileMasksToSkip/=PlayTheOdds_002Fwwwroot_002F_002A_002A_002F_002A_002Ejs/@EntryIndexedValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/ExcludedFiles/FileMasksToSkip/=PlayTheOdds_002Fwwwroot_002F_002A_002A_002F_002A_002Ejs/@EntryIndexRemoved">True</s:Boolean>
@@ -257,6 +261,7 @@
 	<s:Boolean x:Key="/Default/Environment/ExcludedFiles/FilesAndFoldersThirdParty/=5850B9F8_002DB80B_002D4F38_002D86AF_002D440F3932C7F2_002Fd_003Awwwroot_002Fd_003Anode_005Fmodules/@EntryIndexRemoved">True</s:Boolean>
 	
 	
+	
 	<s:Boolean x:Key="/Default/Environment/ExcludedFiles/FilesAndFoldersThirdParty/=5850B9F8_002DB80B_002D4F38_002D86AF_002D440F3932C7F2_002Fd_003Awwwroot_002Fd_003Anode_005Fmodules_002Fd_003Aatomicjs/@EntryIndexedValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/ExcludedFiles/FilesAndFoldersThirdParty/=5850B9F8_002DB80B_002D4F38_002D86AF_002D440F3932C7F2_002Fd_003Awwwroot_002Fd_003Anode_005Fmodules_002Fd_003Aatomicjs/@EntryIndexRemoved">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/ExcludedFiles/FilesAndFoldersThirdParty/=5850B9F8_002DB80B_002D4F38_002D86AF_002D440F3932C7F2_002Fd_003Awwwroot_002Fd_003Anode_005Fmodules_002Fd_003Aknockout/@EntryIndexedValue">False</s:Boolean>
@@ -264,9 +269,12 @@
 	
 	<s:Boolean x:Key="/Default/Environment/ExcludedFiles/FilesAndFoldersThirdParty/=5850B9F8_002DB80B_002D4F38_002D86AF_002D440F3932C7F2_002Fd_003Awwwroot_002Fd_003Anode_005Fmodules_002Fd_003Aknockout_002Fd_003Abuild_002Fd_003Aoutput_002Ff_003Aknockout_002Dlatest_002Ejs/@EntryIndexedValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/ExcludedFiles/FilesAndFoldersThirdParty/=5850B9F8_002DB80B_002D4F38_002D86AF_002D440F3932C7F2_002Fd_003Awwwroot_002Fd_003Anode_005Fmodules_002Fd_003Aknockout_002Fd_003Abuild_002Fd_003Aoutput_002Ff_003Aknockout_002Dlatest_002Ejs/@EntryIndexRemoved">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/ExcludedFiles/FilesAndFoldersToSkip/=5850B9F8_002DB80B_002D4F38_002D86AF_002D440F3932C7F2_002Fd_003Awwwroot_002Fd_003Adist/@EntryIndexedValue">True</s:Boolean>
 	
 	<s:Boolean x:Key="/Default/Environment/ExcludedFiles/FilesAndFoldersToSkip/=5850B9F8_002DB80B_002D4F38_002D86AF_002D440F3932C7F2_002Fd_003Awwwroot_002Fd_003Anode_005Fmodules/@EntryIndexedValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/ExcludedFiles/FilesAndFoldersToSkip/=5850B9F8_002DB80B_002D4F38_002D86AF_002D440F3932C7F2_002Fd_003Awwwroot_002Fd_003Anode_005Fmodules/@EntryIndexRemoved">True</s:Boolean>
+	
+	<s:String x:Key="/Default/Environment/Hierarchy/PsiConfigurationSettingsKey/CustomLocation/@EntryValue">C:\Users\patri\AppData\Local\JetBrains\Transient\ReSharperPlatformVs15\v08_3336929b\SolutionCaches</s:String>
 	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EAddAccessorOwnerDeclarationBracesMigration/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EAlwaysTreatStructAsNotReorderableMigration/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EMigrateBlankLinesAroundFieldToBlankLinesAroundProperty/@EntryIndexedValue">True</s:Boolean>

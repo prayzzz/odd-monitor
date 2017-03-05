@@ -16,9 +16,7 @@ export class Loader {
                         reject();
                     }
                 })
-                .error(data => {
-                    reject();
-                })
+                .error(() => reject())
                 .send();
         });
     }
@@ -48,8 +46,8 @@ export class Loader {
         wager.id = w.id;
         wager.name = w.name;
         wager.oddLeft = w.oddLeft;
-        wager.oddRight = w.oddRight;        
-        wager.startDate = new Date(w.startDate);        
+        wager.oddRight = w.oddRight;
+        wager.startDate = new Date(w.startDate);
         wager.status = w.status;
         wager.wagerLink = this.getMatchUrl(w.id);
 
@@ -61,7 +59,7 @@ export class Loader {
 
         team.additionalData = t.additionalData;
         team.id = t.id;
-        team.logoUrl = this.getLogoUrl(t.additionalData["logoUrl"])
+        team.logoUrl = this.getLogoUrl(t.additionalData["logoUrl"]);
         team.name = t.name;
 
         return team;

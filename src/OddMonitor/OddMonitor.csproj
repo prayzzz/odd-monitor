@@ -7,7 +7,7 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="wwwroot/node_modules/**" CopyToPublishDirectory="Never" />
+    <Content Update="wwwroot/node_modules/**" CopyToPublishDirectory="Never" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.0" />

@@ -23,7 +23,7 @@ export default class MatchViewModel {
         this.wagers
             .filter(w => w.wager.status === Enums.WagerStatus.Open || w.wager.status === Enums.WagerStatus.Live)
             .forEach(w => {
-                this.filteredWagers.push(w)
+                this.filteredWagers.push(w);
             });
 
         this.nextWagerStart = this.getClosestWagerStartDate();
@@ -101,7 +101,7 @@ export default class MatchViewModel {
     }
 
     private getClosestWagerStartDate(): Date {
-        if (this.wagers.length == 0) {
+        if (this.wagers.length === 0) {
             return this.match.startDate;
         }
 
@@ -111,7 +111,7 @@ export default class MatchViewModel {
             if (w.wager.startDate > now && w.wager.startDate < date) {
                 date = w.wager.startDate;
             }
-        })
+        });
 
         return date;
     }

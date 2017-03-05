@@ -60,7 +60,7 @@ export default class MainViewModel {
 
     private loadMatches(): void {
         VpGame.getMatchesAsync().then(matches => {
-            this.matches(matches.map(m => new MatchViewModel(m)))
+            this.matches(matches.map(m => new MatchViewModel(m)));
 
             this.applyCategoryFilter();
 
