@@ -4,7 +4,7 @@
     Csgo,
     Dota2,
     Soccer,
-    Tennis
+    Other
 }
 
 export enum MatchFormat {
@@ -15,6 +15,7 @@ export enum MatchFormat {
     Bo5,
     Bo7,
     Bo9,
+    Other
 }
 
 export enum Site {

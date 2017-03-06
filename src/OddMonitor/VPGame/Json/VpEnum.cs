@@ -19,10 +19,8 @@ namespace OddMonitor.VPGame.Json
                     return Category.Dota2;
                 case "football":
                     return Category.Soccer;
-                case "tennis":
-                    return Category.Tennis;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Category");
+                    return Category.Other;
             }
         }
 
@@ -45,7 +43,7 @@ namespace OddMonitor.VPGame.Json
                 case "bo9":
                     return MatchFormat.Bo9;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MatchFormat");
+                    return MatchFormat.Other;
             }
         }
 

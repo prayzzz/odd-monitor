@@ -8,6 +8,7 @@ namespace OddMonitor.Models
         Bo3,
         Bo5,
         Bo7,
-        Bo9
+        Bo9,
+        Other,
     }
 }

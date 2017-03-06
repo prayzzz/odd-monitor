@@ -69,11 +69,12 @@ export default class MainViewModel {
     }
 
     private initFilter(): void {
-        this.filter[Enums.Category[Enums.Category.Basketball]] = ko.observable(true);
-        this.filter[Enums.Category[Enums.Category.Csgo]] = ko.observable(true);
-        this.filter[Enums.Category[Enums.Category.Dota2]] = ko.observable(true);
-        this.filter[Enums.Category[Enums.Category.Soccer]] = ko.observable(true);
-        this.filter[Enums.Category[Enums.Category.Tennis]] = ko.observable(true);
+        for (let e in Enums.Category) {
+            if (typeof (Enums.Category[e]) !== "number" && Enums.Category[e] !== Enums.Category[Enums.Category.None]) {
+                console.log(Enums.Category[e])
+                this.filter[Enums.Category[e]] = ko.observable(true);
+            }
+        }
 
         const storedFilterStr = localStorage.getItem("filter");
         if (storedFilterStr) {
