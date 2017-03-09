@@ -38,7 +38,7 @@ namespace OddMonitor
                 app.UseDeveloperExceptionPage();
 
                 app.UseSwagger();
-                app.UseSwaggerUi(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "OddMonitor API"); });
+                app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "OddMonitor API"); });
             }
 
             app.UseDefaultFiles();
