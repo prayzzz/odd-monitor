@@ -23,9 +23,9 @@ class AjaxRequest<T> implements IAjaxRequest<T> {
         this.method = method;
         this.url = url;
 
-        this.successCb = (): void => { };
-        this.errorCb = (): void => { };
-        this.alwaysCb = (): void => { };
+        this.successCb = (): void => {};
+        this.errorCb = (): void => {};
+        this.alwaysCb = (): void => {};
     }
 
     public success(cb: (data: T | null) => void): IAjaxRequest<T> {
@@ -53,20 +53,19 @@ class AjaxRequest<T> implements IAjaxRequest<T> {
             }
 
             this.alwaysCb(this.parse(request));
-        }
+        };
 
         request.onerror = () => {
             this.errorCb(this.parse(request));
-        }
+        };
 
         request.onloadend = () => {
             if (request.status >= 200 && request.status < 300) {
                 this.successCb(this.parse(request));
-            }
-            else {
+            } else {
                 this.errorCb(this.parse(request));
             }
-        }
+        };
 
         request.send();
     }
@@ -83,5 +82,5 @@ class AjaxRequest<T> implements IAjaxRequest<T> {
             throw e;
         }
         return result;
-    };
+    }
 }

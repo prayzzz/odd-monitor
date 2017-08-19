@@ -1,4 +1,4 @@
-import { IStringDictionary } from "../shared/types"
+import { IStringDictionary } from "../shared/types";
 
 export interface IMatch {
     additionalData: IStringDictionary<string>;

@@ -26,6 +26,7 @@ namespace OddMonitor
         private static void ConfigureConfiguration(WebHostBuilderContext context, IConfigurationBuilder builder)
         {
             var env = context.HostingEnvironment;
+
             builder.AddEnvironmentVariables();
             builder.AddJsonFile("appsettings.json", true, true)
                    .AddJsonFile($"appsettings.{env.EnvironmentName.ToLower()}.json", true, true);

@@ -29,14 +29,19 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="1.0.0" />
   </ItemGroup>
 
-  <Target Name="BundleFrontend" AfterTargets="PrepareForPublish">
-    <Exec Command="yarn" WorkingDirectory="wwwroot" />
-    <Exec Command="node_modules/.bin/webpack" WorkingDirectory="wwwroot" />
-
+  <Target Name="BuildFrontend" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Release'">
+    <ItemGroup>
+      <FrontendFiles Include="./wwwroot/dist/*" />
+    </ItemGroup>
+    <Delete Files="@(FrontendFiles)" />
+    <Exec Command="yarn --force" WorkingDirectory="wwwroot" />
+    <Exec Command="./node_modules/.bin/webpack --env=$(Configuration)" WorkingDirectory="wwwroot" />
+  </Target>
+  
+  <Target Name="PublishFrontend" AfterTargets="PrepareForPublish" DependsOnTargets="BuildFrontend">
     <ItemGroup>
       <DistFolder Include="wwwroot/dist/**/*" />
     </ItemGroup>
-
     <Copy SourceFiles="@(DistFolder)" DestinationFolder="$(PublishDir)\wwwroot\dist\%(RecursiveDir)" />
   </Target>
 

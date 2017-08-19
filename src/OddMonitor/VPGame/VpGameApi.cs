@@ -23,8 +23,17 @@ namespace OddMonitor.VPGame
     [Inject]
     public class VpGameApi : IVpGameApi
     {
+        // Uri
         private const string Scheme = "http";
         private const string Host = "www.vpgame.com";
+        private const string WagerPath = "gateway/v1/match/schedule";
+        private const string MatchPath = "gateway/v1/match";
+
+        // Header
+        private const string AcceptHeader = "application/json; application/javascript";
+        private const string AcceptLanguageHeader = "en-US";
+        private const string CacheControlHeader = "no-cache";
+        private const string UserAgentHeader = "https://github.com/prayzzz/odd-monitor";
 
         private readonly JsonSerializer _jsonSerializer;
         private readonly ILogger _logger;
@@ -52,7 +61,7 @@ namespace OddMonitor.VPGame
             {
                 Scheme = Scheme,
                 Host = Host,
-                Path = "gateway/v1/match/schedule",
+                Path = WagerPath,
                 Query = $"tid={scheduleId}&lang=en_US"
             };
 
@@ -64,6 +73,11 @@ namespace OddMonitor.VPGame
             try
             {
                 var webRequest = WebRequest.Create(uriBuilder.Uri);
+                webRequest.Headers["Accept"] = AcceptHeader;
+                webRequest.Headers["Accept-Language"] = AcceptLanguageHeader;                
+                webRequest.Headers["Cache-Control"] = CacheControlHeader;
+                webRequest.Headers["User-Agent"] = UserAgentHeader;                
+
                 var response = await webRequest.GetResponseAsync();
                 using (var stream = new JsonTextReader(new StreamReader(response.GetResponseStream())))
                 {
@@ -72,12 +86,12 @@ namespace OddMonitor.VPGame
             }
             catch (WebException)
             {
-                _logger.LogError("VpGame not available");
+                _logger.LogInformation("VpGame not available");
                 return new List<T>();
             }
             catch (Exception e)
             {
-                _logger.LogError(-1, e, string.Empty);
+                _logger.LogError(e, "Unknown error while requesting {Uri}", uriBuilder.Uri);
                 return new List<T>();
             }
         }
@@ -88,7 +102,7 @@ namespace OddMonitor.VPGame
             {
                 Scheme = Scheme,
                 Host = Host,
-                Path = "gateway/v1/match",
+                Path = MatchPath,
                 Query = $"category=&status={status}&limit=100&page=1"
             };
 

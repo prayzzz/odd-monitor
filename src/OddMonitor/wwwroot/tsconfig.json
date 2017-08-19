@@ -1,10 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "allowJs": true,
+    "lib": [ "dom", "es5", "scripthost", "es2015" ],
     "noImplicitAny": true,
     "noImplicitThis": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "strictNullChecks": true
+    "skipLibCheck": true,
+    "sourceMap": false,
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "ES5"
   }
 }

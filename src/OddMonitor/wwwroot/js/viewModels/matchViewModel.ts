@@ -1,9 +1,9 @@
 ﻿import * as ko from "knockout";
 
 import * as Enums from "../models/enums";
-import { Match, Team } from "../models/models"
-import Timespan from "../shared/timespan"
-import WagerViewModel from "./wagerViewModel"
+import { Match, Team } from "../models/models";
+import Timespan from "../shared/timespan";
+import WagerViewModel from "./wagerViewModel";
 
 export default class MatchViewModel {
     private nextWagerStart: Date;
@@ -20,11 +20,9 @@ export default class MatchViewModel {
         this.filteredWagers = ko.observableArray<WagerViewModel>();
         this.startDateFormatted = ko.observable<string>();
 
-        this.wagers
-            .filter(w => w.wager.status === Enums.WagerStatus.Open || w.wager.status === Enums.WagerStatus.Live)
-            .forEach(w => {
-                this.filteredWagers.push(w)
-            });
+        this.wagers.filter(w => w.wager.status === Enums.WagerStatus.Open || w.wager.status === Enums.WagerStatus.Live).forEach(w => {
+            this.filteredWagers.push(w);
+        });
 
         this.nextWagerStart = this.getClosestWagerStartDate();
         this.refreshStartDateFormatted();
@@ -73,7 +71,7 @@ export default class MatchViewModel {
      */
     public get startsInFormatted(): string {
         const minutes = Math.floor(this.startsIn / 60000);
-        const seconds = ("0" + Math.floor((this.startsIn - (minutes * 60000)) / 1000)).slice(-2);
+        const seconds = ("0" + Math.floor((this.startsIn - minutes * 60000) / 1000)).slice(-2);
 
         return `in ${minutes}:${seconds}`;
     }
@@ -85,23 +83,23 @@ export default class MatchViewModel {
         }
 
         if (this.startsIn > Timespan.fromMinutes(30)) {
-            // set absolute time        
+            // set absolute time
             const hours = ("0" + this.nextWagerStart.getHours()).slice(-2);
             const minutes = ("0" + this.nextWagerStart.getMinutes()).slice(-2);
             this.startDateFormatted(hours + ":" + minutes);
             return;
         }
 
-        // set relative time            
+        // set relative time
         const minutes = Math.floor(this.startsIn / 60000);
-        const seconds = ("0" + Math.floor((this.startsIn - (minutes * 60000)) / 1000)).slice(-2);
+        const seconds = ("0" + Math.floor((this.startsIn - minutes * 60000) / 1000)).slice(-2);
 
         this.startDateFormatted(`in ${minutes}:${seconds}`);
         return;
     }
 
     private getClosestWagerStartDate(): Date {
-        if (this.wagers.length == 0) {
+        if (this.wagers.length === 0) {
             return this.match.startDate;
         }
 
@@ -111,7 +109,7 @@ export default class MatchViewModel {
             if (w.wager.startDate > now && w.wager.startDate < date) {
                 date = w.wager.startDate;
             }
-        })
+        });
 
         return date;
     }

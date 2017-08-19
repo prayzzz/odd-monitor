@@ -1,11 +1,13 @@
 ﻿import * as ko from "knockout";
 
-import * as Enums from "../models/enums"
+import * as Enums from "../models/enums";
 import { Loader as VpGame } from "../api/vpGame";
-import Timespan from "../shared/timespan"
+import Timespan from "../shared/timespan";
 import MatchViewModel from "../viewModels/matchViewModel";
 
-interface ICategoryFilter { [c: string]: KnockoutObservable<boolean> }
+interface ICategoryFilter {
+    [c: string]: KnockoutObservable<boolean>;
+}
 
 export default class MainViewModel {
     private readonly matches: KnockoutObservableArray<MatchViewModel>;
@@ -60,7 +62,7 @@ export default class MainViewModel {
 
     private loadMatches(): void {
         VpGame.getMatchesAsync().then(matches => {
-            this.matches(matches.map(m => new MatchViewModel(m)))
+            this.matches(matches.map(m => new MatchViewModel(m)));
 
             this.applyCategoryFilter();
 
@@ -69,11 +71,11 @@ export default class MainViewModel {
     }
 
     private initFilter(): void {
-        this.filter[Enums.Category[Enums.Category.Basketball]] = ko.observable(true);
-        this.filter[Enums.Category[Enums.Category.Csgo]] = ko.observable(true);
-        this.filter[Enums.Category[Enums.Category.Dota2]] = ko.observable(true);
-        this.filter[Enums.Category[Enums.Category.Soccer]] = ko.observable(true);
-        this.filter[Enums.Category[Enums.Category.Tennis]] = ko.observable(true);
+        for (let e in Enums.Category) {
+            if (typeof Enums.Category[e] !== "number" && Enums.Category[e] !== Enums.Category[Enums.Category.None]) {
+                this.filter[Enums.Category[e]] = ko.observable(true);
+            }
+        }
 
         const storedFilterStr = localStorage.getItem("filter");
         if (storedFilterStr) {
@@ -106,7 +108,6 @@ export default class MainViewModel {
             this.refreshClock();
             this.refreshTimeSinceLastUpdate();
             this.refreshMatchStartDate();
-
         }, Timespan.fromSeconds(1));
     }
 
@@ -122,7 +123,7 @@ export default class MainViewModel {
     private refreshTimeSinceLastUpdate(): void {
         const refreshAgo = new Date().getTime() - this.lastRefresh.getTime();
         const refreshMinutes = Math.floor(refreshAgo / 60000);
-        const refreshSeconds = ("0" + Math.floor((refreshAgo - (refreshMinutes * 60000)) / 1000)).slice(-2);
+        const refreshSeconds = ("0" + Math.floor((refreshAgo - refreshMinutes * 60000) / 1000)).slice(-2);
 
         this.timeSinceLastUpdate(`${refreshMinutes}:${refreshSeconds}`);
     }

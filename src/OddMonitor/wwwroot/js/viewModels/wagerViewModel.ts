@@ -1,8 +1,8 @@
 import * as ko from "knockout";
 
-import Timespan from "../shared/timespan"
+import Timespan from "../shared/timespan";
 import * as Enums from "../models/enums";
-import { Team, Wager } from "../models/models"
+import { Team, Wager } from "../models/models";
 
 export default class WagerViewModel {
     public wager: Wager;
@@ -39,35 +39,32 @@ export default class WagerViewModel {
         return Enums.WagerStatus[this.wager.status];
     }
 
-    public get handicap(): string {
+    public get rightHandicap(): string {
         if (!this.hasHandicap) {
             return "";
+        }
+
+        if (this.hasLeftHandicap) {
+            return "[+" + this.wager.additionalData["handicap"] + "]";
         }
 
         return "[-" + this.wager.additionalData["handicap"] + "]";
     }
 
-    public get nameWithHandicap(): string {
+    public get leftHandicap(): string {
         if (!this.hasHandicap) {
-            return this.wager.name;
+            return "";
         }
 
-        let handicap = this.wager.additionalData["handicap"];
-        let teamName = this.teamLeft.name;
-
-        if (this.wager.additionalData["handicapTeam"] === "right") {
-            teamName = this.teamRight.name;
+        if (this.hasRightHandicap) {
+            return "[+" + this.wager.additionalData["handicap"] + "]";
         }
 
-        if (teamName.length > 10) {
-            teamName = teamName.slice(0, 15).trim() + "...";
-        }
-
-        return `${this.wager.name} [${teamName} -${handicap}]`;
+        return "[-" + this.wager.additionalData["handicap"] + "]";
     }
 
     public get hasHandicap(): boolean {
-        return this.wager.additionalData["handicapTeam"] != "none";
+        return this.wager.additionalData["handicapTeam"] !== "none";
     }
 
     public get hasLeftHandicap(): boolean {
@@ -81,6 +78,7 @@ export default class WagerViewModel {
     public get startsIn(): number {
         return this.wager.startDate.getTime() - new Date().getTime();
     }
+
     public get isStartingSoon(): boolean {
         return !this.isLive && this.startsIn < Timespan.fromMinutes(30);
     }

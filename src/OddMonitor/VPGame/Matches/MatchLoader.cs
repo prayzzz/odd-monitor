@@ -30,10 +30,10 @@ namespace OddMonitor.VPGame.Matches
 
         private List<Match> _matchData;
 
-        public MatchLoader(IVpGameApi api, ILoggerFactory loggerFactory)
+        public MatchLoader(IVpGameApi api, ILogger<MatchLoader> logger)
         {
             _api = api;
-            _logger = loggerFactory.CreateLogger<MatchLoader>();
+            _logger = logger;
 
             _matchDataLock = new object();
             _matchData = new List<Match>();
@@ -68,7 +68,7 @@ namespace OddMonitor.VPGame.Matches
             matches = matches.DistinctBy(x => x.AdditionalData["scheduleId"]).ToList();
 
             watch.Stop();
-            _logger.LogInformation($"{matches.Count} matches loaded in {watch.ElapsedMilliseconds}ms");
+            _logger.LogDebug($"{matches.Count} matches loaded in {watch.ElapsedMilliseconds}ms");
 
             watch.Restart();
 
@@ -78,7 +78,7 @@ namespace OddMonitor.VPGame.Matches
             }
 
             watch.Stop();
-            _logger.LogInformation($"{matches.Sum(m => m.Wagers.Count)} wagers loaded in {watch.ElapsedMilliseconds}ms");
+            _logger.LogDebug($"{matches.Sum(m => m.Wagers.Count)} wagers loaded in {watch.ElapsedMilliseconds}ms");
 
             if (matches.Count != 0)
             {
@@ -124,7 +124,7 @@ namespace OddMonitor.VPGame.Matches
             }
 
             watch.Stop();
-            _logger.LogInformation($"{matchToWagers.Count} matches updated in {watch.ElapsedMilliseconds}ms");
+            _logger.LogDebug($"{matchToWagers.Count} matches updated in {watch.ElapsedMilliseconds}ms");
         }
     }
 }

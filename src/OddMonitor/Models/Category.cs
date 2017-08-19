@@ -7,6 +7,6 @@
         Csgo,
         Dota2,
         Soccer,
-        Tennis
+        Other
     }
 }
