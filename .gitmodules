@@ -1,0 +1,3 @@
+[submodule "ps-utilities"]
+	path = ps-utilities
+	url = https://github.com/prayzzz/ps-utilities.git
