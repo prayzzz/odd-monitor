@@ -6,6 +6,7 @@ namespace OddMonitor.Models
     public class Team : IEquatable<Team>
     {
         public Dictionary<string, string> AdditionalData { get; set; } = new Dictionary<string, string>();
+
         public int Id { get; set; }
 
         public string Name { get; set; }

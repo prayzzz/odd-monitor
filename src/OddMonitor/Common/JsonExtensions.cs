@@ -2,7 +2,7 @@
 
 namespace OddMonitor.Common
 {
-    public static class Extension
+    public static class JsonExtensions
     {
         public static string ValueAsString(this JToken token, string property)
         {

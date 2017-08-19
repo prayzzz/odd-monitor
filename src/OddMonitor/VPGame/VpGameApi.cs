@@ -72,8 +72,8 @@ namespace OddMonitor.VPGame
             }
             catch (WebException)
             {
-                _logger.LogError("VpGame not available");                
-                return new List<T>();                
+                _logger.LogError("VpGame not available");
+                return new List<T>();
             }
             catch (Exception e)
             {

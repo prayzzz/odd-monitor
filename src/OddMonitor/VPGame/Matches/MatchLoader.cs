@@ -24,9 +24,9 @@ namespace OddMonitor.VPGame.Matches
 
         private readonly IVpGameApi _api;
         private readonly Timer _fullLoadTimer;
-        private readonly Timer _refreshWagersTimer;
         private readonly ILogger<MatchLoader> _logger;
         private readonly object _matchDataLock;
+        private readonly Timer _refreshWagersTimer;
 
         private List<Match> _matchData;
 
@@ -54,43 +54,6 @@ namespace OddMonitor.VPGame.Matches
             {
                 return _matchData;
             }
-        }
-
-        private async void RefreshWagers(object state)
-        {
-            var watch = BetterStopWatch.Start();
-
-            var matches = new List<Match>(_matchData);
-
-            var now = DateTime.Now;
-            var startingMatches = matches.Where(x => x.StartDate > now && x.StartDate - now < TimeSpan.FromMinutes(15)).ToList();
-
-            if (startingMatches.Count == 0)
-            {
-                return;
-            }
-
-            var matchToWagers = new Dictionary<Match, List<Wager>>();
-            foreach (var match in startingMatches)
-            {
-                var loadedWagers = await _api.GetWagersAsync(match.AdditionalData["scheduleId"]);
-                if (loadedWagers.Count > 0)
-                {
-                    matchToWagers.Add(match, loadedWagers);
-                }
-            }
-
-            lock (_matchDataLock)
-            {
-                foreach (var pair in matchToWagers)
-                {
-                    pair.Key.Wagers.Clear();
-                    pair.Key.Wagers.AddRange(pair.Value);
-                }
-            }
-
-            watch.Stop();
-            _logger.LogInformation($"{matchToWagers.Count} matches updated in {watch.ElapsedMilliseconds}ms");
         }
 
         private async void LoadMatches(object state)
@@ -124,6 +87,44 @@ namespace OddMonitor.VPGame.Matches
                     _matchData = matches;
                 }
             }
+        }
+
+        private async void RefreshWagers(object state)
+        {
+            var watch = BetterStopWatch.Start();
+
+            var matches = new List<Match>(_matchData);
+
+            var now = DateTime.Now;
+            var startingMatches = matches.Where(x => x.StartDate > now && x.StartDate - now < TimeSpan.FromMinutes(15))
+                                         .ToList();
+
+            if (startingMatches.Count == 0)
+            {
+                return;
+            }
+
+            var matchToWagers = new Dictionary<Match, List<Wager>>();
+            foreach (var match in startingMatches)
+            {
+                var loadedWagers = await _api.GetWagersAsync(match.AdditionalData["scheduleId"]);
+                if (loadedWagers.Count > 0)
+                {
+                    matchToWagers.Add(match, loadedWagers);
+                }
+            }
+
+            lock (_matchDataLock)
+            {
+                foreach (var pair in matchToWagers)
+                {
+                    pair.Key.Wagers.Clear();
+                    pair.Key.Wagers.AddRange(pair.Value);
+                }
+            }
+
+            watch.Stop();
+            _logger.LogInformation($"{matchToWagers.Count} matches updated in {watch.ElapsedMilliseconds}ms");
         }
     }
 }

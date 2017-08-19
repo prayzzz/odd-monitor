@@ -62,29 +62,29 @@ namespace OddMonitor.VPGame.Json
                 case "canceled":
                     return WagerStatus.Canceled;
                 default:
+                {
+                    if (value.Contains("later"))
                     {
-                        if (value.Contains("later"))
-                        {
-                            return WagerStatus.Open;
-                        }
-
-                        if (value.Contains("now"))
-                        {
-                            return WagerStatus.Live;
-                        }
-
-                        if (value.Contains("settling"))
-                        {
-                            return WagerStatus.Settled;
-                        }
-
-                        if (value.Contains("canceling"))
-                        {
-                            return WagerStatus.Canceled;
-                        }
-
-                        throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WagerStatus");
+                        return WagerStatus.Open;
                     }
+
+                    if (value.Contains("now"))
+                    {
+                        return WagerStatus.Live;
+                    }
+
+                    if (value.Contains("settling"))
+                    {
+                        return WagerStatus.Settled;
+                    }
+
+                    if (value.Contains("canceling"))
+                    {
+                        return WagerStatus.Canceled;
+                    }
+
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WagerStatus");
+                }
             }
         }
     }
