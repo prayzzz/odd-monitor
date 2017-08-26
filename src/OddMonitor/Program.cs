@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -10,7 +11,8 @@ namespace OddMonitor
     {
         public static void Main(string[] args)
         {
-            var hostConfig = new ConfigurationBuilder().AddCommandLine(args)
+            var hostConfig = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string> { { "urls", "http://localhost:5001" } })
+                                                       .AddCommandLine(args)
                                                        .Build();
 
             new WebHostBuilder().UseKestrel()
