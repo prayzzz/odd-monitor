@@ -7,7 +7,6 @@
 
   <Target Name="PrintVersion" BeforeTargets="BeforeBuild">
     <Message Text="Building $(AssemblyName) version $(Version)" Importance="High" />
-    <WriteLinesToFile File="version" Lines="$(Version)" Overwrite="true"/>
   </Target>
   
 </Project>
