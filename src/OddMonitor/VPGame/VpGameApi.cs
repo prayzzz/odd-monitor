@@ -89,6 +89,11 @@ namespace OddMonitor.VPGame
                 _logger.LogInformation("VpGame not available");
                 return new List<T>();
             }
+            catch (IOException)
+            {
+                _logger.LogInformation("Response broken");
+                return new List<T>();
+            }
             catch (Exception e)
             {
                 _logger.LogError(e, "Unknown error while requesting {Uri}", uriBuilder.Uri);
