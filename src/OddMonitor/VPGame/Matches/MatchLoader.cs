@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using OddMonitor.Common;
 using OddMonitor.Common.Extensions;
 using OddMonitor.Models;
 using prayzzz.Common.Attributes;
 using prayzzz.Common.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
 namespace OddMonitor.VPGame.Matches
 {

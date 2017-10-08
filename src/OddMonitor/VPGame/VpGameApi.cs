@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using OddMonitor.Models;
 using OddMonitor.VPGame.Json;
 using prayzzz.Common.Attributes;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace OddMonitor.VPGame
 {
@@ -23,18 +23,22 @@ namespace OddMonitor.VPGame
     [Inject]
     public class VpGameApi : IVpGameApi
     {
-        // Uri
-        private const string Scheme = "http";
-        private const string Host = "www.vpgame.com";
-        private const string WagerPath = "gateway/v1/match/schedule";
-        private const string MatchPath = "gateway/v1/match";
-
         // Header
         private const string AcceptHeader = "application/json; application/javascript";
-        private const string AcceptLanguageHeader = "en-US";
-        private const string CacheControlHeader = "no-cache";
-        private const string UserAgentHeader = "https://github.com/prayzzz/odd-monitor";
 
+        private const string AcceptLanguageHeader = "en-US";
+
+        private const string CacheControlHeader = "no-cache";
+
+        private const string Host = "www.vpgame.com";
+
+        private const string MatchPath = "gateway/v1/match";
+
+        // Uri
+        private const string Scheme = "http";
+
+        private const string UserAgentHeader = "https://github.com/prayzzz/odd-monitor";
+        private const string WagerPath = "gateway/v1/match/schedule";
         private readonly JsonSerializer _jsonSerializer;
         private readonly ILogger _logger;
 
@@ -74,9 +78,9 @@ namespace OddMonitor.VPGame
             {
                 var webRequest = WebRequest.Create(uriBuilder.Uri);
                 webRequest.Headers["Accept"] = AcceptHeader;
-                webRequest.Headers["Accept-Language"] = AcceptLanguageHeader;                
+                webRequest.Headers["Accept-Language"] = AcceptLanguageHeader;
                 webRequest.Headers["Cache-Control"] = CacheControlHeader;
-                webRequest.Headers["User-Agent"] = UserAgentHeader;                
+                webRequest.Headers["User-Agent"] = UserAgentHeader;
 
                 var response = await webRequest.GetResponseAsync();
                 using (var stream = new JsonTextReader(new StreamReader(response.GetResponseStream())))

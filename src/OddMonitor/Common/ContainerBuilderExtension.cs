@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using Autofac;
+﻿using Autofac;
 using prayzzz.Common.Attributes;
 using prayzzz.Common.Enums;
+using System;
+using System.Linq;
+using System.Reflection;
 
 namespace OddMonitor.Common.Extensions
 {
@@ -21,7 +21,7 @@ namespace OddMonitor.Common.Extensions
                 var attribute = type.GetTypeInfo().GetCustomAttribute<InjectAttribute>();
                 var serviceTypes = attribute.ServiceTypes;
 
-                if (!serviceTypes.Any())
+                if (serviceTypes.Length == 0)
                 {
                     serviceTypes = type.GetInterfaces();
                 }
@@ -33,12 +33,15 @@ namespace OddMonitor.Common.Extensions
                     case DependencyLifetime.Transient:
                         registrationBuilder.InstancePerDependency();
                         break;
+
                     case DependencyLifetime.Scoped:
                         registrationBuilder.InstancePerLifetimeScope();
                         break;
+
                     case DependencyLifetime.Singleton:
                         registrationBuilder.SingleInstance();
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

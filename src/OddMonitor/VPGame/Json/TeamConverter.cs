@@ -1,8 +1,8 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OddMonitor.Common;
 using OddMonitor.Models;
+using System;
 
 namespace OddMonitor.VPGame.Json
 {
@@ -31,7 +31,6 @@ namespace OddMonitor.VPGame.Json
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException("CanWrite is false");
         }
     }
 }

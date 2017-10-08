@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using System.Collections.Generic;
+using System.IO;
 
 namespace OddMonitor
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {

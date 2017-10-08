@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OddMonitor.Models;
+using System.Collections.Generic;
 
 namespace OddMonitor.VPGame.Matches
 {

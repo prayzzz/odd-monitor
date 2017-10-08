@@ -1,6 +1,6 @@
-﻿using System;
-using prayzzz.Common.Attributes;
+﻿using prayzzz.Common.Attributes;
 using prayzzz.Common.Enums;
+using System;
 
 namespace OddMonitor.Heartbeat
 {
